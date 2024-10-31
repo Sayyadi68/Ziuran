@@ -4,12 +4,12 @@ import headerSvg from '../assets/react.svg'
 const Header = () => {
   return (
     <header>
-      <div className="p-[12px] bg-[#FF4D6D] before:z-[2] before:absolute before:right-[125px] before:top-[30px] before:content-['فروشگاه-زیوران'] before:text-white  ">
+      <div className="p-[12px] bg-[#FF4D6D] before:z-[2] before:absolute before:right-[100px] before:top-[30px] before:content-['فروشگاه-زیوران'] before:text-white  ">
 
         <svg
           width='364'
           height='325'
-          viewBox='0 0 364 325'
+          viewBox='0 0 300 325'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           className='absolute right-0 top-0 translate-y-[-39%] inline-block'
