@@ -7,3 +7,8 @@
     @apply mx-auto max-w-7xl;
   }
 }
+@font-face {
+  font-family: BYekan;
+  font-weight: 300;
+  src: url('./fonts/BYekan.ttf') format('truetype');
+}

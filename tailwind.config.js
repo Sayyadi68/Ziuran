@@ -4,6 +4,9 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}', // Adjust paths as needed
   ],
   theme: {
+    fontFamily: {
+      BYkan: ['BYkan'],
+    },
     extend: {},
   },
   plugins: [],

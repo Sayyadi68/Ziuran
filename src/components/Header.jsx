@@ -1,28 +1,47 @@
 import React from 'react'
-import headerSvg from '../assets/react.svg'
+import { FiPhoneCall } from 'react-icons/fi'
 
 const Header = () => {
   return (
-    <header>
-      <div className="p-[12px] bg-[#FF4D6D] before:z-[2] before:absolute before:right-[100px] before:top-[30px] before:content-['فروشگاه-زیوران'] before:text-white  ">
-
-        <svg
-          width='364'
-          height='325'
-          viewBox='0 0 300 325'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-          className='absolute right-0 top-0 translate-y-[-39%] inline-block'
-        >
-          <path
-            d='M346.2 125.1V136.7H334.6C323.5 136.7 313.7 140.7 305.3 148.6C296.8 156.5 288.9 165.2 281.4 174.7C274 184.2 266.7 192.9 259.5 200.8C252.3 208.7 244.5 212.7 236.1 212.7H125.3C116.4 212.7 108.3 208.7 101.1 200.8C94 192.9 86.8 184.2 79.5 174.7C72.2 165.2 64.3 156.5 56 148.6C47.6 140.7 37.6 136.7 26.2 136.7H15.8V125.1H346.2Z'
-            fill='#FF4D6D'
-          />
-        </svg>
-
+    <header className='border-t-[12px] border-[#FF4D6D] px-10 py-4 w-[100vw] '>
+      <div className='grid grid-cols-3 gap-12 items-center justify-between'>
+        {/*Header Icon*/}
+        <img
+          src='https://pre-websites.ir/elementor/cosmetic/wp-content/uploads/2022/08/Central_Curve_shadow2-1.svg'
+          alt='header image'
+          className='absolute top-0 right-0 translate-y-[-125px] translate-x-[80px] -z-10'
+        />
+        {/*Contacts info  */}
+        <div className='flex justify-start gap-10 col-span-2 '>
+          <div className='flex flex-row items-end gap-2 mr-[-20px]  '>
+            {/* Header text */}
+            <FiPhoneCall className='text-4xl' />
+            <p className='flex flex-col text-[16px] gap-1'>
+              <span className='font-bold text-white'>فروشگاه زیوران</span>
+              <span>توضیحات فروشگاه</span>
+            </p>
+          </div>
+          <div className='flex flex-row items-end gap-2 '>
+            {/*Contact details*/}
+            <FiPhoneCall className='text-4xl' />
+            <p className='flex flex-col '>
+              <span>پشتیبانی:</span>
+              <span>125-1234567</span>
+            </p>
+          </div>
+          <div className='flex flex-row items-end gap-2 '>
+            {/*Contact details*/}
+            <FiPhoneCall className='text-4xl' />
+            <p className='flex flex-col '>
+              <span>آدرس فروشگاه:</span>
+              <span>قم، خیابان امام</span>
+            </p>
+          </div>
+        </div>
+        <div className='justify-self-end'>
+          <div>Social icons</div>
+        </div>
       </div>
-
-
     </header>
   )
 }
