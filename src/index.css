@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+@layer base {
   .align-element {
     @apply mx-auto max-w-7xl;
   }
 }
 @font-face {
-  font-family: BYekan;
-  font-weight: 300;
+  font-family: 'BYekan';
   src: url('./fonts/BYekan.ttf') format('truetype');
 }
