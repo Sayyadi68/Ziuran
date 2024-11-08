@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Loading, Navbar } from '../components'
+import { Header, Loading, Navbar ,Footer} from '../components'
 import { Outlet, useNavigation } from 'react-router-dom'
 
 const HomeLayout = () => {
@@ -12,6 +12,7 @@ const HomeLayout = () => {
       <section className='py-20 align-element '>
         {isLoading ? <Loading /> : <Outlet />}
       </section>
+      <Footer/>
     </div>
   )
 }
