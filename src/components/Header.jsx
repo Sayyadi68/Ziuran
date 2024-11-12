@@ -1,6 +1,7 @@
 import React from 'react'
 import { FiPhoneCall } from 'react-icons/fi'
 import HeaderItem from './HeaderItem'
+import Socialicons from './Socialicons'
 const Header = () => {
   return (
     <header className='border-t-[12px] border-[#FF4D6D] px-10 py-4 w-[100vw] font-extrabold font-[BYekan]'>
@@ -21,17 +22,22 @@ const Header = () => {
           />
           <HeaderItem
             title={'فروشگاه زیوران'}
-            subtitle={'توضیحات فروشگاه'}
+            subtitle={'پشتیبانی:'}
             icon={<FiPhoneCall className='text-4xl' />}
           />
           <HeaderItem
             title={'فروشگاه زیوران'}
-            subtitle={'توضیحات فروشگاه'}
+            subtitle={'آدرس فروشگاه:'}
             icon={<FiPhoneCall className='text-4xl' />}
           />
         </div>
         <div className='justify-self-end'>
-          <div>Social icons</div>
+          <div>
+
+
+            <Socialicons/>
+ 
+          </div>
         </div>
       </div>
     </header>
