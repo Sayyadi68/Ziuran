@@ -4,7 +4,7 @@ import HeaderItem from './HeaderItem'
 import Socialicons from './Socialicons'
 const Header = () => {
   return (
-    <header className='border-t-[12px] border-[#FF4D6D] px-10 py-4 w-[100vw] font-extrabold font-[BYekan]'>
+    <header className='border-t-[12px] border-[#FF4D6D] px-10 py-4 w-[100%] font-extrabold font-[BYekan]'>
       
       {/*Header Icon*/}
       <div className='absolute top-0 right-0 translate-y-[-125px] translate-x-[80px] -z-10'>
