@@ -32,35 +32,35 @@ const Footer = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white shadow-lg rounded-lg p-4">
                 <div>
                     <h3 className="text-[#000] text-xl font-extrabold font-[BYekan] mb-2"><span className="text-[#FF4D6D] mb-2">ارتباط</span> با ما</h3>
-                    <p className="flex flex-row gap-2"><FaPhone className="text-[#FF4D6D] text-md" />تلفن:09123456789 </p>
-                    <p className="flex flex-row gap-2"><FaMailBulk className="text-[#FF4D6D] text-md" />ایمیل: info@example.com</p>
-                    <p className="flex flex-row gap-2"><FaThumbtack className="text-[#FF4D6D] text-md" />آدرس: تهران، خیابان ولیعصر، کوچه طراحان </p>
+                    <p className="mb-3 flex flex-row gap-2"><FaPhone className="text-[#FF4D6D] text-md" />تلفن:09123456789 </p>
+                    <p className="mb-3 flex flex-row gap-2"><FaMailBulk className="text-[#FF4D6D] text-md" />ایمیل: info@example.com</p>
+                    <p className="mb-3 flex flex-row gap-2"><FaThumbtack className="text-[#FF4D6D] text-md" />آدرس: تهران، خیابان ولیعصر، کوچه طراحان </p>
                 </div>
                 <div>
                     <h3 className="text-[#000] text-xl font-extrabold font-[BYekan] mb-2"><span className="text-[#FF4D6D] mb-2">خدمات</span> مشتریان</h3>
                     <ul>
-                        <li>ثبت نام / ورود</li>
-                        <li>پیگیری سفارش</li>
-                        <li>پشتیبانی آنلاین</li>
-                        <li>شکایات</li>
+                        <li className="mb-3 ">ثبت نام / ورود</li>
+                        <li className="mb-3 ">پیگیری سفارش</li>
+                        <li className="mb-3 ">پشتیبانی آنلاین</li>
+                        <li className="mb-3 ">شکایات</li>
                     </ul>
                 </div>
                 <div>
                     <h3 className="text-[#000] text-xl font-extrabold font-[BYekan] mb-2"><span className="text-[#FF4D6D] mb-2">همکاری</span> با ما</h3>
                     <ul>
-                        <li>همکاری در فروش</li>
-                        <li>استخدام در شرکت</li>
-                        <li>تامین محصولات</li>
-                        <li>فرم همکاری</li>
+                        <li  className="mb-3 ">همکاری در فروش</li>
+                        <li  className="mb-3 ">استخدام در شرکت</li>
+                        <li  className="mb-3 ">تامین محصولات</li>
+                        <li  className="mb-3 ">فرم همکاری</li>
                     </ul>
                 </div>
                 <div>
                     <h3 className="text-[#000] text-xl font-extrabold font-[BYekan] mb-2"><span className="text-[#FF4D6D] mb-2">لینک‌های</span> مفید</h3>
                     <ul>
-                        <li>صفحه اصلی</li>
-                        <li>فروشگاه</li>
-                        <li>درباره ما</li>
-                        <li>تماس با ما</li>
+                        <li className="mb-3 ">صفحه اصلی</li>
+                        <li className="mb-3 ">فروشگاه</li>
+                        <li className="mb-3 ">درباره ما</li>
+                        <li className="mb-3 ">تماس با ما</li>
                     </ul>
                 </div>
             </div>
