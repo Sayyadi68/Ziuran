@@ -24,27 +24,27 @@ const PhoneMenu = () => {
 
             <PhoneMenuItems
                 title={'فروشگاه'}
-                icon={<FiShoppingBag className='text-xl text-[#000] group-hover:text-[#FF4D6D] ' />}
+                icon={<FiShoppingBag />}
                 link={'shop'}
             />
             <PhoneMenuItems
                 title={'وبلاگ'}
-                icon={<FiBook className='text-xl text-[#000] group-hover:text-[#FF4D6D] ' />}
+                icon={<FiBook />}
                 link={'blog'}
             />
             <PhoneMenuItems
                 title={'درباره ما'}
-                icon={<FiInfo className='text-xl text-[#000] group-hover:text-[#FF4D6D] ' />}
+                icon={<FiInfo />}
                 link={'about'}
             />
             <PhoneMenuItems
                 title={'تماس با ما'}
-                icon={<FiPhoneCall className='text-xl text-[#000] group-hover:text-[#FF4D6D] ' />}
+                icon={<FiPhoneCall />}
                 link={'call'}
             />
-             <PhoneMenuItems
+            <PhoneMenuItems
                 title={'ورود/ثبت‌نام'}
-                icon={<FiUser className='text-xl text-[#000] group-hover:text-[#FF4D6D] ' />}
+                icon={<FiUser />}
                 link={'login'}
             />
 
