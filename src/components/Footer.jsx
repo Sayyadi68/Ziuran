@@ -1,5 +1,6 @@
 import React from "react";
 import { FaSync, FaShieldAlt, FaTh, FaUserClock, FaPhone, FaMailBulk, FaThumbtack } from "react-icons/fa";
+import Socialicons from './Socialicons'
 
 const Footer = () => {
     return (
@@ -30,6 +31,7 @@ const Footer = () => {
 
             {/* بخش لینک‌ها و اطلاعات */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white shadow-lg rounded-lg p-4">
+
                 <div>
                     <h3 className="text-[#000] text-xl font-extrabold font-[BYekan] mb-2"><span className="text-[#FF4D6D] mb-2">ارتباط</span> با ما</h3>
                     <p className="mb-3 flex flex-row gap-2"><FaPhone className="text-[#FF4D6D] text-md" />تلفن:09123456789 </p>
@@ -48,10 +50,10 @@ const Footer = () => {
                 <div>
                     <h3 className="text-[#000] text-xl font-extrabold font-[BYekan] mb-2"><span className="text-[#FF4D6D] mb-2">همکاری</span> با ما</h3>
                     <ul>
-                        <li  className="mb-3 ">همکاری در فروش</li>
-                        <li  className="mb-3 ">استخدام در شرکت</li>
-                        <li  className="mb-3 ">تامین محصولات</li>
-                        <li  className="mb-3 ">فرم همکاری</li>
+                        <li className="mb-3 ">همکاری در فروش</li>
+                        <li className="mb-3 ">استخدام در شرکت</li>
+                        <li className="mb-3 ">تامین محصولات</li>
+                        <li className="mb-3 ">فرم همکاری</li>
                     </ul>
                 </div>
                 <div>
@@ -62,6 +64,9 @@ const Footer = () => {
                         <li className="mb-3 ">درباره ما</li>
                         <li className="mb-3 ">تماس با ما</li>
                     </ul>
+                    <div className="justify-end w-100 flex">
+                        <Socialicons />
+                    </div>
                 </div>
             </div>
 
