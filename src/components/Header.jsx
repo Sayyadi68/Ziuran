@@ -19,8 +19,8 @@ const Header = () => {
           <HeaderItem
             title={'فروشگاه زیوران'}
             title_color={'#FFFFFF'}
-            subtitle={'توضیحات فروشگاه'}
-            // icon={<FiPhoneCall className='text-2xl text-[#FF4D6D] ' />}
+            subtitle={'فروشگاه زیبا رویان'}
+            icon={<FiPhoneCall className='text-2xl text-[#FF4D6D] ' />}
           />
         </div>
 
