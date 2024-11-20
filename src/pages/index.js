@@ -1,2 +1,6 @@
 export { default as HomeLayout } from './HomeLayout'
 export { default as Landing } from './Landing'
+export { default as Products } from './Products'
+export { default as Weblog } from './Weblog'
+export { default as About } from './About'
+export { default as Contact } from './Contact'

@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { HomeLayout, Landing } from './pages'
+import { About, Contact, HomeLayout, Landing, Products, Weblog } from './pages'
 function App() {
   const router = createBrowserRouter([
     {
@@ -11,6 +11,10 @@ function App() {
           index: true,
           element: <Landing />,
         },
+        { path: 'products', element: <Products /> },
+        { path: 'weblog', element: <Weblog /> },
+        { path: 'about', element: <About /> },
+        { path: 'contact', element: <Contact /> },
       ],
     },
   ])
