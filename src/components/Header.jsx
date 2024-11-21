@@ -50,7 +50,6 @@ const PcHeader = () => {
 
 const PhoneHeader = () => {  
   const [showPhoneMenu, setShowPhoneMenu] = useState(false);  
-  const componentRef = useRef(null);  
 
   const handleShow = () => {  
     setShowPhoneMenu(true);  
@@ -60,22 +59,6 @@ const PhoneHeader = () => {
     setShowPhoneMenu(false);  
   };  
 
-  const handleClickOutside = (event) => {  
-    if (componentRef.current && !componentRef.current.contains(event.target)) {  
-      handleClose();  
-    }  
-  };  
-
-  useEffect(() => {  
-    document.addEventListener('mousedown', handleClickOutside);  
-    return () => {  
-      document.removeEventListener('mousedown', handleClickOutside);  
-    };  
-  }, []);  
-
-  useEffect(() => {  
-    console.log('Phone menu state:', showPhoneMenu);  
-  }, [showPhoneMenu]);  
 
   return (  
     <>  
