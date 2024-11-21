@@ -10,9 +10,9 @@ import {
 } from 'react-icons/fi'
 import { PhoneMenuItems } from '.'
 
-const PhoneMenu = () => {
+const PhoneMenu = ({className}) => {
   return (
-    <aside className='fixed h-[100%] w-[300px] bg-[#FFF] z-[20] top-0 hidden'>
+    <aside className={'fixed h-[100%] w-[300px] bg-[#FFF] z-[20] top-0 ' +  className  }>
       <div className='flex items-center flex-row-reverse justify-between p-4 py-6 shadow-[0_4px_3px_0px_rgba(0,0,0,0.3)]'>
         <FiSearch className='font-extrabold hover:cursor-pointer' />
         <input

@@ -75,8 +75,7 @@ const HomeLayout = () => {
   return (
     <div>
       <Header />
-      <Navbar />
-      <PhoneMenu />
+
       <Category_typeone title="آخرین محصولات فروشگاه" products={products} />
       <section className='py-20 align-element '>
         {isLoading ? <Loading /> : <Outlet />}
