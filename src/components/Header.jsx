@@ -62,7 +62,7 @@ const PhoneHeader = () => {
 
   return (  
     <>  
-      <div className="navbar bg-base-100 shadow-[0_4px_3px_0px_rgba(0,0,0,0.3)]" ref={componentRef}>  
+      <div className="navbar bg-base-100 shadow-[0_4px_3px_0px_rgba(0,0,0,0.3)]">  
         <div className="navbar-start">  
           <div className="dropdown">  
             <div className="btn btn-ghost btn-circle" onClick={handleShow}>  
