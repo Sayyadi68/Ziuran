@@ -1,16 +1,67 @@
 import React from 'react'
-const NavbarItem = ({ title, icon, link }) => {
+import { NavLink } from 'react-router-dom'
+import {
+  FiHome,
+  FiShoppingBag,
+  FiBook,
+  FiInfo,
+  FiPhoneCall,
+  FiUser,
+  FiShoppingCart,
+  FiSearch,
+} from 'react-icons/fi'
+const navbarItems = [
+  {
+    title: 'خانه',
+    icon: <FiHome className='text-xl text-[#000] group-hover:text-[#FF4D6D]' />,
+    link: '/',
+  },
+  {
+    title: 'فروشگاه',
+    icon: (
+      <FiShoppingBag className='text-xl text-[#000] group-hover:text-[#FF4D6D]' />
+    ),
+    link: 'products',
+  },
+  {
+    title: 'وبلاگ',
+    icon: <FiBook className='text-xl text-[#000] group-hover:text-[#FF4D6D]' />,
+    link: 'blog',
+  },
+  {
+    title: 'درباره ما',
+    icon: <FiInfo className='text-xl text-[#000] group-hover:text-[#FF4D6D]' />,
+    link: 'about',
+  },
+  {
+    title: 'تماس با ما',
+    icon: (
+      <FiPhoneCall className='text-xl text-[#000] group-hover:text-[#FF4D6D]' />
+    ),
+    link: 'contact',
+  },
+]
+
+const NavbarItem = () => {
   return (
-    <a
-      href={'http://localhost:5173/' + link}
-      className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
-    >
-      {/* Header text */}
-      {icon}
-      <span className='flex flex-col text-[16px] gap-1 group-hover:text-[#FF4D6D] '>
-        {title}
-      </span>
-    </a>
+    <div className='flex flex-row gap-10'>
+      {navbarItems.map((item) => {
+        const { link, title, icon } = item
+        return (
+          <NavLink
+            id={title}
+            to={link}
+            className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
+          >
+            {/* Header text */}
+            {icon}
+            <span className='flex flex-col text-[16px] gap-1 group-hover:text-[#FF4D6D] '>
+              {title}
+            </span>
+          </NavLink>
+        )
+      })}
+    </div>
   )
 }
 
