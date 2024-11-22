@@ -1,0 +1,68 @@
+const products = [
+  {
+    image: 'https://via.placeholder.com/100',
+    name: 'کرم ضد آفتاب لافار',
+    category: 'کرم ضد آفتاب',
+    oldPrice: '۴۴۳,۰۰۰',
+    newPrice: '۱۸۹,۰۰۰',
+    discount: 15,
+  },
+  {
+    image: 'https://via.placeholder.com/100',
+    name: 'ادوپرفیوم زنانه روونا',
+    category: 'ادو پرفیوم',
+    oldPrice: '۴۳۸,۰۰۰',
+    newPrice: '۳۳۷,۰۰۰',
+    discount: 12,
+  },
+  {
+    image: 'https://via.placeholder.com/100',
+    name: 'کرم مرطوب کننده آبرسان',
+    category: 'آبرسان، مرطوب کننده',
+    oldPrice: '۵۰,۰۰۰',
+    newPrice: '۴۲,۹۰۰',
+    discount: 14,
+  },
+  {
+    image: 'https://via.placeholder.com/100',
+    name: 'ماسک صورت شب بایو آکوا',
+    category: 'ماسک صورت',
+    oldPrice: '۳۸۹,۰۰۰',
+    newPrice: '۱۸۹,۰۰۰',
+    discount: 25,
+  },
+  {
+    image: 'https://via.placeholder.com/300',
+    name: 'کرم ضد آفتاب لافار',
+    category: 'کرم ضد آفتاب',
+    oldPrice: '۴۴۳,۰۰۰',
+    newPrice: '۱۸۹,۰۰۰',
+    discount: 15,
+  },
+  {
+    image: 'https://via.placeholder.com/300',
+    name: 'ادوپرفیوم زنانه روونا',
+    category: 'ادو پرفیوم',
+    oldPrice: '۴۳۸,۰۰۰',
+    newPrice: '۳۳۷,۰۰۰',
+    discount: 12,
+  },
+  {
+    image: 'https://via.placeholder.com/300',
+    name: 'کرم مرطوب کننده آبرسان',
+    category: 'آبرسان، مرطوب کننده',
+    oldPrice: '۵۰,۰۰۰',
+    newPrice: '۴۲,۹۰۰',
+    discount: 14,
+  },
+  {
+    image: 'https://via.placeholder.com/300',
+    name: 'ماسک صورت شب بایو آکوا',
+    category: 'ماسک صورت',
+    oldPrice: '۳۸۹,۰۰۰',
+    newPrice: '۱۸۹,۰۰۰',
+    discount: 25,
+  },
+]
+
+export default products
