@@ -19,11 +19,49 @@ function App() {
           element: (
             <>
               <ProductsCategory
-                title='آخرین محصولات فروشگاه'
+                title={'آخرین محصولات فروشگاه'}
                 products={products}
+                blackSubject={'فروشگاه'}
+                redSubject={'جدیدترین محصولات'}
+                SubjectPose={''}
+                bg_color={''}
+                slice={8}
               />
 
-              <div className="px-6 mt-8">
+              <ProductsCategory
+                title={'تضمین بهترین قیمت در سطح کشور!'}
+                products={products}
+                blackSubject={'فروشگاه'}
+                redSubject={'تخفیف ویژه محصولات'}
+                SubjectPose={'center'}
+                bg_color={'bg-orange-500'}
+                slice={4}
+              />
+
+              <ProductsCategory
+                title={'محبوب از نگاه شما'}
+                products={products}
+                blackSubject={'فروشگاه'}
+                redSubject={'محبوب ترین محصولات'}
+                SubjectPose={''}
+                bg_color={''}
+                slice={4}
+              />
+
+              <ProductsCategory
+                title={'پیشنهاد ویژه برای تو'}
+                products={products}
+                blackSubject={'پیشنهادی'}
+                redSubject={'محصولات'}
+                SubjectPose={''}
+                bg_color={''}
+                slice={4}
+              />
+
+
+
+
+              <div className="pb-6 mt-8  align-element ">
                 <div className="mb-4 flex flex-row justify-between items-center">
                   <h1 className="text-3xl font-bold text-[#FF4D6D] ">
                     آخرین مطالب <span className="text-gray-800">فروشگاه</span>
