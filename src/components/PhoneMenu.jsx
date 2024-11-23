@@ -13,12 +13,12 @@ import { PhoneMenuItems } from '.';
 const PhoneMenu = ({ className }) => {  
   // تعریف آرایه‌ای از آیتم‌های منو  
   const menuItems = [  
-    { title: 'صفحه اصلی', icon: <FiHome />, link: 'home' },  
-    { title: 'فروشگاه', icon: <FiShoppingBag />, link: 'shop' },  
+    { title: 'صفحه اصلی', icon: <FiHome />, link: '/' },  
+    { title: 'فروشگاه', icon: <FiShoppingBag />, link: 'products' },  
     { title: 'وبلاگ', icon: <FiBook />, link: 'blog' },  
     { title: 'درباره ما', icon: <FiInfo />, link: 'about' },  
-    { title: 'تماس با ما', icon: <FiPhoneCall />, link: 'call' },  
-    { title: 'ورود/ثبت‌نام', icon: <FiUser />, link: 'login' },  
+    { title: 'تماس با ما', icon: <FiPhoneCall />, link: 'contact' },  
+    { title: 'ورود/ثبت‌نام', icon: <FiUser />, link: 'account' },  
   ];  
 
   return (  
