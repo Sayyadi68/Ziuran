@@ -41,26 +41,68 @@ const navbarItems = [
     link: 'contact',
   },
 ]
+const navbarOptions = [
+  {
+    title: '',
+    icon: <FiUser className='text-xl text-[#000] group-hover:text-[gray]' />,
+    link: 'home'
+  },
+  {
+    title: '',
+    icon: <FiShoppingCart className='text-xl text-[#000] group-hover:text-[gray]' />,
+    link: 'home'
+  },
+  {
+    title: '',
+    icon: <FiSearch className='text-xl text-[#000] group-hover:text-[gray]' />,
+    link: 'home'
+  }
+]
 
 const NavbarItem = () => {
   return (
-    <div className='flex flex-row gap-10'>
-      {navbarItems.map((item) => {
-        const { link, title, icon } = item
-        return (
-          <NavLink
-            id={title}
-            to={link}
-            className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
-          >
-            {/* Header text */}
-            {icon}
-            <span className='flex flex-col text-[16px] gap-1 group-hover:text-[#FF4D6D] '>
-              {title}
-            </span>
-          </NavLink>
-        )
-      })}
+    <div className='flex flex-row justify-between items-center  p-3'>
+
+      <div  className='flex flex-row gap-10'>
+
+        {navbarItems.map((item) => {
+          const { link, title, icon } = item
+          return (
+            <NavLink
+              id={title}
+              to={link}
+              className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
+            >
+              {/* Header text */}
+              {icon}
+              <span className='flex flex-col text-[16px] gap-1 group-hover:text-[#FF4D6D] '>
+                {title}
+              </span>
+            </NavLink>
+          )
+        })}
+      </div>
+
+      <div  className='flex flex-row-reverse gap-5'>
+
+        {navbarOptions.map((item) => {
+          const { link, title, icon } = item
+          return (
+            <NavLink
+              id={title}
+              to={link}
+              className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
+            >
+              {/* Header text */}
+              {icon}
+              <span className='flex flex-col text-[16px] gap-1 group-hover:text-[#FF4D6D] '>
+                {title}
+              </span>
+            </NavLink>
+          )
+        })}
+      </div>
+
     </div>
   )
 }
