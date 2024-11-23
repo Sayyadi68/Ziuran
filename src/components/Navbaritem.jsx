@@ -45,12 +45,12 @@ const navbarOptions = [
   {
     title: '',
     icon: <FiUser className='text-xl text-[#000] group-hover:text-[gray]' />,
-    link: 'home'
+    link: 'account'
   },
   {
     title: '',
     icon: <FiShoppingCart className='text-xl text-[#000] group-hover:text-[gray]' />,
-    link: 'home'
+    link: 'cart'
   },
   {
     title: '',

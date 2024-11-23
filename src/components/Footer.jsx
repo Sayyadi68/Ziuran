@@ -28,7 +28,7 @@ const contactInfo = [
 
 // آرایه‌ای برای خدمات مشتریان  
 const customerServices = [  
-  { name: 'ثبت نام / ورود', path: '/login' },  
+  { name: 'ثبت نام / ورود', path: '/account' },  
   { name: 'پیگیری سفارش', path: '/order-tracking' },  
   { name: 'پشتیبانی آنلاین', path: '/support' },  
   { name: 'شکایات', path: '/complaints' },  
