@@ -1,5 +1,6 @@
 import React from 'react'
 import ProductCard from './ProductCard'
+import { NavLink } from 'react-router-dom'
 
 const Category_typeone = ({ title, products, blackSubject, redSubject, slice, SubjectPose, bg_color }) => {
   return (
@@ -23,7 +24,7 @@ const Category_typeone = ({ title, products, blackSubject, redSubject, slice, Su
           <div className='mb-4'>
             <p className='text-sm text-gray-500'>{title}</p>
             <div className='flex flex-row-reverse items-center justify-between'>
-              <button className="bg-pink-200 transition-all hover:bg-[#FF4D6D] p-3 rounded-full hover:text-white font-bold  text-red-500 text-sm mt-2">مشاهده محصولات</button>
+              <NavLink to={'products'} className="bg-pink-200 transition-all hover:bg-[#FF4D6D] p-3 rounded-full hover:text-white font-bold  text-red-500 text-sm mt-2">مشاهده محصولات</NavLink>
 
               <h2 className='text-xl font-bold text-gray-700'>
                 <span className='text-[#FF4D6D]'>{redSubject}</span>{" " + blackSubject}
@@ -38,6 +39,7 @@ const Category_typeone = ({ title, products, blackSubject, redSubject, slice, Su
             <ProductCard key={index} {...product} />
           ))}
         </div>
+
       </div>
     </div>
   )

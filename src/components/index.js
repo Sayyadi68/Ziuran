@@ -12,3 +12,5 @@ export { default as PhoneMenuItems } from './PhoneMenuItems'
 
 export { default as BlogGrid } from './BlogGrid'
 export { default as BlogCard  } from './BlogCard '
+
+export { default as FeaturesData } from './FeaturesData'
