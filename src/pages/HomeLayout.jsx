@@ -13,7 +13,7 @@ const HomeLayout = () => {
   return (
     <div>
       <Header />
-      <section className='py-20 align-element '>
+      <section className='py-10 align-element '>
         {isLoading ? <Loading /> : <Outlet />}
       </section>
       <Footer />

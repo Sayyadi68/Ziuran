@@ -3,7 +3,7 @@ import ProductCard from './ProductCard'
 
 const Category_typeone = ({ title, products }) => {
   return (
-    <div className='p-6 '>
+    <div className='px-6'>
       {/* عنوان دسته‌بندی */}
       <div className='mb-4'>
         <p className='text-sm text-gray-500'>{title}</p>
