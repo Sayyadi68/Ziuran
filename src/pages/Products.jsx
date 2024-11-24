@@ -45,7 +45,7 @@ const Products = () => {
           className='range range-error'
         />
       </div>
-      <div className='grid grid-cols-3 gap-x-6'>
+      <div className='grid grid-cols-3 gap-6'>
         {productsInfo.map((product, index) => {
           return <ProductCard key={index} {...product} />
         })}
