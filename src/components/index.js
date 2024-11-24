@@ -14,3 +14,5 @@ export { default as BlogGrid } from './BlogGrid'
 export { default as BlogCard  } from './BlogCard '
 
 export { default as FeaturesData } from './FeaturesData'
+
+export {default as HomeSwiper  } from "./HomeSwiper"

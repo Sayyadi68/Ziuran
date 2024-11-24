@@ -1,7 +1,7 @@
 import { createBrowserRouter, NavLink, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { About, Contact, HomeLayout, Landing, Products, Weblog } from './pages'
-import { ProductsCategory, BlogGrid ,FeaturesData} from './components'
+import { ProductsCategory, BlogGrid, FeaturesData , HomeSwiper } from './components'
 
 import products from './pages/productsInfo'
 import blogsData from './pages/blogsTestForHme'
@@ -18,7 +18,9 @@ function App() {
           element: (
             <>
 
-              <FeaturesData/>
+              <HomeSwiper/>
+            
+              <FeaturesData />
 
               <ProductsCategory
                 title={'آخرین محصولات فروشگاه'}
@@ -59,9 +61,6 @@ function App() {
                 bg_color={''}
                 slice={4}
               />
-
-
-
 
               <div className="pb-6 mt-8  align-element ">
                 <div className="mb-4 flex flex-row justify-between items-center">
