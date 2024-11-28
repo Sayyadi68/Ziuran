@@ -52,7 +52,7 @@ const usefulLinks = [
 
 const Footer = () => {  
   return (  
-    <footer className='p-4 bg-gray-100'>  
+    <footer className='p-4 bg-gray-100  mb-[70px] xl:mb-0'>  
       {/* بخش آمار بالا */}  
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white shadow-lg rounded-lg p-4 mb-8'>  
         {stats.map(stat => (  

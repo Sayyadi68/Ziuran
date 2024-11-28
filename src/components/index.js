@@ -16,3 +16,6 @@ export { default as BlogCard  } from './BlogCard '
 export { default as FeaturesData } from './FeaturesData'
 
 export {default as HomeSwiper  } from "./HomeSwiper"
+
+
+export {default as PhoneBottomMenu  } from "./PhoneBottomMenu"

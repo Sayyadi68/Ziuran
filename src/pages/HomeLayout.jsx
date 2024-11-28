@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header, Loading, Navbar, Footer, PhoneMenu } from '../components'
+import { Header, Loading, Navbar, Footer, PhoneMenu , PhoneBottomMenu } from '../components'
 import { Outlet, useNavigation } from 'react-router-dom'
 
 import products from './productsInfo'
@@ -17,6 +17,7 @@ const HomeLayout = () => {
         {isLoading ? <Loading /> : <Outlet />}
       </section>
       <Footer />
+      <PhoneBottomMenu/>
     </div>
   )
 }
