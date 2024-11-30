@@ -4,7 +4,7 @@ const BlogCardForBlogPage = ({ imageSrc, date, title, description, onBackClick }
   return (
     <div className="px-2 mb-3">
 
-      <div className=" mx-auto rounded-lg shadow-md overflow-hidden border border-gray-200">
+      <div className=" mx-auto h-[330px] rounded-lg shadow-md overflow-hidden border border-gray-200">
         {/* Image Section */}
         <div className="relative">
           <img
