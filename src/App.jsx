@@ -62,7 +62,7 @@ function App() {
                 slice={4}
               />
 
-              <div className="pb-6 mt-8  align-element ">
+              <div className="pb-6 px-6 mt-8  align-element ">
                 <div className="mb-4 flex flex-row justify-between items-center">
                   <h1 className="text-3xl font-bold text-[#FF4D6D] ">
                     آخرین مطالب <span className="text-gray-800">فروشگاه</span>

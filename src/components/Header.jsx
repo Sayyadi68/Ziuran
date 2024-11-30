@@ -3,6 +3,7 @@ import { FiPhoneCall, FiMapPin } from 'react-icons/fi';
 import HeaderItem from './HeaderItem';
 import Socialicons from './Socialicons';
 import { Navbar, PhoneMenu } from '../components';
+import { NavLink } from 'react-router-dom';
 
 const PcHeader = () => {
   return (
@@ -83,7 +84,7 @@ const PhoneHeader = () => {
           </div>  
         </div>  
         <div className="navbar-center">  
-          <a className="btn btn-ghost text-xl">daisyUI</a>  
+          <NavLink to={"/"} className="btn btn-ghost text-xl">daisyUI</NavLink>  
         </div>  
         <div className="navbar-end">  
           <button className="btn btn-ghost btn-circle" onClick={handleShow}>  
