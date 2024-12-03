@@ -1,11 +1,23 @@
 import { createBrowserRouter, NavLink, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { About, Contact, HomeLayout, Landing, Products, Weblog } from './pages'
-import { ProductsCategory, BlogGrid, FeaturesData , HomeSwiper } from './components'
+import {
+  About,
+  Contact,
+  HomeLayout,
+  Landing,
+  Products,
+  SingleProduct,
+  Weblog,
+} from './pages'
+import {
+  ProductsCategory,
+  BlogGrid,
+  FeaturesData,
+  HomeSwiper,
+} from './components'
 
 import products from './pages/productsInfo'
 import blogsData from './pages/blogsTestForHme'
-
 
 function App() {
   const router = createBrowserRouter([
@@ -17,9 +29,8 @@ function App() {
           index: true,
           element: (
             <>
+              <HomeSwiper />
 
-              <HomeSwiper/>
-            
               <FeaturesData />
 
               <ProductsCategory
@@ -62,18 +73,21 @@ function App() {
                 slice={4}
               />
 
-              <div className="pb-6 px-6 mt-8  align-element ">
-                <div className="mb-4 flex flex-row justify-between items-center">
-                  <h1 className="text-3xl font-bold text-[#FF4D6D] ">
-                    آخرین مطالب <span className="text-gray-800">فروشگاه</span>
+              <div className='pb-6 px-6 mt-8  align-element '>
+                <div className='mb-4 flex flex-row justify-between items-center'>
+                  <h1 className='text-3xl font-bold text-[#FF4D6D] '>
+                    آخرین مطالب <span className='text-gray-800'>فروشگاه</span>
                   </h1>
-                  <NavLink to={'blog'} className="bg-pink-200 transition-all hover:bg-[#FF4D6D] p-3 rounded-full hover:text-white font-bold  text-red-500 text-sm mt-2">مشاهده مطالب</NavLink>
+                  <NavLink
+                    to={'blog'}
+                    className='bg-pink-200 transition-all hover:bg-[#FF4D6D] p-3 rounded-full hover:text-white font-bold  text-red-500 text-sm mt-2'
+                  >
+                    مشاهده مطالب
+                  </NavLink>
                 </div>
                 <BlogGrid blogs={blogsData} />
               </div>
-
             </>
-
           ),
         },
         {
@@ -84,6 +98,7 @@ function App() {
         { path: 'blog', element: <Weblog /> },
         { path: 'about', element: <About /> },
         { path: 'contact', element: <Contact /> },
+        { path: 'products/:id', element: <SingleProduct /> },
       ],
     },
   ])

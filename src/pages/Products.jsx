@@ -14,7 +14,7 @@ const filters = [
 const Products = () => {
   return (
     // این بخش قراره یه کامپونیت بشه
-    <section className='grid grid-cols-[0.6fr,2fr] gap-x-4 px-6 '>
+    <section className='grid md:grid-cols-[0.6fr,2fr] gap-x-4 px-6 grid-cols-1 '>
       <div>
         <input
           type='text'
@@ -42,10 +42,10 @@ const Products = () => {
           min={0}
           max='100'
           value='10'
-          className='range range-error'
+          className='range range-error mb-12'
         />
       </div>
-      <div className='grid grid-cols-3 gap-x-6'>
+      <div className='grid md:grid-cols-2 gap-8 lg:grid-cols-3 '>
         {productsInfo.map((product, index) => {
           return <ProductCard key={index} {...product} />
         })}

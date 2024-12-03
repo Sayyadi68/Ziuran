@@ -1,5 +1,6 @@
 const products = [
   {
+    id: 1,
     image: 'https://via.placeholder.com/100',
     name: 'کرم ضد آفتاب لافار',
     category: 'کرم ضد آفتاب',
@@ -8,6 +9,7 @@ const products = [
     discount: 15,
   },
   {
+    id: 2,
     image: 'https://via.placeholder.com/100',
     name: 'ادوپرفیوم زنانه روونا',
     category: 'ادو پرفیوم',
@@ -16,6 +18,7 @@ const products = [
     discount: 12,
   },
   {
+    id: 3,
     image: 'https://via.placeholder.com/100',
     name: 'کرم مرطوب کننده آبرسان',
     category: 'آبرسان، مرطوب کننده',
@@ -24,6 +27,7 @@ const products = [
     discount: 14,
   },
   {
+    id: 4,
     image: 'https://via.placeholder.com/100',
     name: 'ماسک صورت شب بایو آکوا',
     category: 'ماسک صورت',
@@ -32,7 +36,8 @@ const products = [
     discount: 25,
   },
   {
-    image: 'https://via.placeholder.com/300',
+    id: 5,
+    image: 'https://via.placeholder.com/100',
     name: 'کرم ضد آفتاب لافار',
     category: 'کرم ضد آفتاب',
     oldPrice: '۴۴۳,۰۰۰',
@@ -40,7 +45,8 @@ const products = [
     discount: 15,
   },
   {
-    image: 'https://via.placeholder.com/300',
+    id: 6,
+    image: 'https://via.placeholder.com/100',
     name: 'ادوپرفیوم زنانه روونا',
     category: 'ادو پرفیوم',
     oldPrice: '۴۳۸,۰۰۰',
@@ -48,7 +54,8 @@ const products = [
     discount: 12,
   },
   {
-    image: 'https://via.placeholder.com/300',
+    id: 7,
+    image: 'https://via.placeholder.com/100',
     name: 'کرم مرطوب کننده آبرسان',
     category: 'آبرسان، مرطوب کننده',
     oldPrice: '۵۰,۰۰۰',
@@ -56,7 +63,8 @@ const products = [
     discount: 14,
   },
   {
-    image: 'https://via.placeholder.com/300',
+    id: 8,
+    image: 'https://via.placeholder.com/100',
     name: 'ماسک صورت شب بایو آکوا',
     category: 'ماسک صورت',
     oldPrice: '۳۸۹,۰۰۰',

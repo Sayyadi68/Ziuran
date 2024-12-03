@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ProductCard = ({
+  id,
   image,
   name,
   category,
@@ -9,7 +11,10 @@ const ProductCard = ({
   discount,
 }) => {
   return (
-    <div className='bg-white shadow-md rounded-lg pb-4 text-center relative cursor-pointer hover:drop-shadow-xl hover:transition-all transition-all'>
+    <Link
+      className='bg-white shadow-md rounded-lg pb-4 text-center relative cursor-pointer hover:drop-shadow-xl hover:transition-all transition-all'
+      to={`/products/${id}`}
+    >
       {/* نشان تخفیف */}
       <span className='absolute right-2 bg-[#FF4D6D] text-white text-xs px-2 py-4 rounded-b-lg'>
         {discount}%-
@@ -24,7 +29,7 @@ const ProductCard = ({
         <p className='text-gray-400 line-through text-sm'>{oldPrice} تومان</p>
         <p className='text-[#FF4D6D] font-bold'>{newPrice} تومان</p>
       </div>
-    </div>
+    </Link>
   )
 }
 
