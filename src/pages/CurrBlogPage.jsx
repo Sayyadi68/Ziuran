@@ -38,15 +38,15 @@ const CurrBlogPage = () => {
                             {/* متا دیتا */}
                             <div className="text-sm text-gray-500 mb-4 flex flex-row items-center justify-center gap-6">
                                 <span className="flex items-center gap-1">
-                                    <MdDateRange />
+                                    <MdDateRange className="text-[#FF4D6D] text-lg font-semibold" />
                                     {blog.date}
                                 </span>
                                 <span className="flex items-center gap-1">
-                                    <HiOutlineUser />
+                                    <HiOutlineUser className="text-[#FF4D6D] text-lg font-semibold" />
                                     {blog.writer}
                                 </span>
                                 <span className="flex items-center gap-1">
-                                    <IoChatboxEllipsesOutline />
+                                    <IoChatboxEllipsesOutline className="text-[#FF4D6D] text-lg font-semibold" />
                                     دیدگاه‌ها
                                 </span>
                             </div>
