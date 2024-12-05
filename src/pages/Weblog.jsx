@@ -9,9 +9,10 @@ const Weblog = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-6">
-        {blogsData.map((blog) => (
+        {blogsData.map((blog , index) => (
           <BlogCardForBlogPage
-            key={blog.id}
+            key={index}
+            id={blog.id}
             imageSrc={blog.image}
             date={blog.date}
             title={blog.title}

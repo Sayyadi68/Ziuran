@@ -7,6 +7,7 @@ const BlogGrid = ({ blogs }) => {
       {blogs.map((blog, index) => (
         <BlogCard
           key={index}
+          id={blog.id}
           image={blog.image}
           title={blog.title}
           date={blog.date}

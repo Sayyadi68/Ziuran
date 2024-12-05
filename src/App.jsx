@@ -98,6 +98,7 @@ function App() {
         { path: 'blog', element: <Weblog /> },
         { path: 'about', element: <About /> },
         { path: 'contact', element: <Contact /> },
+        { path: 'blog/:id', element: <>im here</> },
         { path: 'products/:id', element: <SingleProduct /> },
       ],
     },

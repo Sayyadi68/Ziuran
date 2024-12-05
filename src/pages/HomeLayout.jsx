@@ -8,7 +8,6 @@ import products from './productsInfo'
 const HomeLayout = () => {
   const navigation = useNavigation()
   const isLoading = navigation.state === 'loading'
-  console.log(products)
 
   return (
     <div>
