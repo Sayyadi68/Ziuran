@@ -10,7 +10,7 @@ const BlogCardForBlogPage = ({ id, imageSrc, date, title, description, onBackCli
 
       <div className="px-2 mb-3">
 
-        <div className=" mx-auto h-[330px] rounded-lg shadow-md overflow-hidden border border-gray-200">
+        <div className=" mx-auto h-[330px] bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
           {/* Image Section */}
           <div className="relative">
             <img
@@ -41,7 +41,7 @@ const BlogCardForBlogPage = ({ id, imageSrc, date, title, description, onBackCli
           </div>
 
           {/* Content Section */}
-          <div className="p-4 bg-white">
+          <div className="p-4">
             <div className="flex justify-between items-center text-sm text-gray-500">
               <span>{date}</span>
               <span>🗓️</span>

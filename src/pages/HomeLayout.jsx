@@ -12,7 +12,7 @@ const HomeLayout = () => {
   return (
     <div>
       <Header />
-      <section className='py-10 '>
+      <section className='py-10  '>
         {isLoading ? <Loading /> : <Outlet />}
       </section>
       <Footer />
