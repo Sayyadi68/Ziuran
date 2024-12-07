@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import productsInfo from './productsInfo'
 import { ProductCard } from '../components/index'
 const filters = [
@@ -12,6 +12,12 @@ const filters = [
 ]
 
 const Products = () => {
+  const [products, setProducts] = useState(productsInfo)
+
+  const handleFilter = (cat) => {
+    const newProducts = products.filter((product) => !product.category == cat)
+    console.log(newProducts)
+  }
   return (
     // این بخش قراره یه کامپونیت بشه
     <section className='grid md:grid-cols-[0.6fr,2fr] gap-x-4 px-6 grid-cols-1 '>
@@ -28,7 +34,12 @@ const Products = () => {
           {filters.map((filter, index) => {
             return (
               <div key={index} className='flex items-center gap-x-2'>
-                <input type='checkbox' className='checkbox checkbox-md' />
+                <input
+                  type='checkbox'
+                  className='checkbox checkbox-md'
+                  value={filter}
+                  onChange={() => handleFilter(filter)}
+                />
                 <span>{filter}</span>
               </div>
             )
@@ -46,7 +57,7 @@ const Products = () => {
         />
       </div>
       <div className='grid md:grid-cols-2 gap-8 lg:grid-cols-3 '>
-        {productsInfo.map((product, index) => {
+        {products.map((product, index) => {
           return <ProductCard key={index} {...product} />
         })}
       </div>
