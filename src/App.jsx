@@ -9,6 +9,7 @@ import {
   SingleProduct,
   Weblog,
   CurrBlogPage,
+  Login,
 } from './pages'
 import {
   ProductsCategory,
@@ -99,6 +100,7 @@ function App() {
         { path: 'blog', element: <Weblog /> },
         { path: 'about', element: <About /> },
         { path: 'contact', element: <Contact /> },
+        { path: 'account', element: <Login /> },
         { path: 'blog/:id', element: <CurrBlogPage/> },
         { path: 'products/:id', element: <SingleProduct /> },
       ],
