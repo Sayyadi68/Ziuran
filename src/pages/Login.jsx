@@ -79,7 +79,7 @@ function AuthPage() {
                             <input
                                 type="tel"
                                 id="phone"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF4D6D]"
+                                className="w-full text-center border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF4D6D]"
                                 placeholder="09123456789"
                                 value={phoneNumber}
                                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -99,7 +99,7 @@ function AuthPage() {
                             <label htmlFor="otp" className="block text-gray-700 mb-2">
                                 کد یکبار مصرف <span className="text-[#FF4D6D]">*</span>
                             </label>
-                            <div className="flex gap-5 justify-center">
+                            <div className="flex justify-between">
                                 {[...Array(6)].map((_, index) => (
                                     <input
                                         key={index}
