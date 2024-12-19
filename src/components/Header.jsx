@@ -1,53 +1,56 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { FiPhoneCall, FiMapPin } from 'react-icons/fi';
-import HeaderItem from './HeaderItem';
-import Socialicons from './Socialicons';
-import { Navbar, PhoneMenu } from '../components';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';  
+import { FiPhoneCall, FiMapPin } from 'react-icons/fi';  
+import HeaderItem from './HeaderItem';  
+import Socialicons from './Socialicons';  
+import { Navbar, PhoneMenu } from '../components';  
+import { NavLink } from 'react-router-dom';  
+import logo from '../assets/logo.png'; // Ensure this path is correct  
 
-const PcHeader = () => {
-  return (
-    <>
-      <header className='border-t-[12px] border-[#FF4D6D] px-10 py-4 w-[100%] font-extrabold font-[BYekan]'>
-        <div className='absolute top-0 right-0 translate-y-[-125px] translate-x-[80px] -z-10'>
-          <img
-            src='https://pre-websites.ir/elementor/cosmetic/wp-content/uploads/2022/08/Central_Curve_shadow2-1.svg'
-            alt='header image'
-          />
-        </div>
+const PcHeader = () => {  
+  return (  
+    <>  
+      <header className='border-t-[20px] border-[#FF4D6D] px-10 py-4 w-full font-extrabold font-[BYekan]'>  
+        <div className='absolute top-0 right-0 translate-y-[-125px] translate-x-[70px] -z-10'>  
+          <img  
+            src='https://pre-websites.ir/elementor/cosmetic/wp-content/uploads/2022/08/Central_Curve_shadow2-1.svg'  
+            alt='header background decoration'  
+            style={{width: '380px'}}
+          />  
+        </div>  
 
-        <div className='flex flex-row items-center justify-between'>
-          <HeaderItem
-            title={'فروشگاه زیوران'}
-            title_color={'#FFFFFF'}
-            subtitle={'فروشگاه زیبا رویان'}
-            icon={<FiPhoneCall className='text-2xl text-[#FF4D6D]' />}
-          />
-          <div className='flex flex-row w-[80%] justify-between items-center'>
-            <div className='flex flex-row gap-[4rem]'>
-              <HeaderItem
-                title_color={'#000'}
-                subtitle={'فروشگاه زیوران'}
-                title={'پشتیبانی:'}
-                subtitle_color={'gray'}
-                icon={<FiPhoneCall className='text-2xl text-[#FF4D6D]' />}
-              />
-              <HeaderItem
-                title_color={'#000'}
-                subtitle={'فروشگاه زیوران'}
-                title={'آدرس فروشگاه:'}
-                subtitle_color={'gray'}
-                icon={<FiMapPin className='text-2xl text-[#FF4D6D]' />}
-              />
-            </div>
-            <Socialicons />
-          </div>
-        </div>
-      </header>
-      <Navbar />
-    </>
-  );
-};
+        <div className='flex flex-row items-center justify-between'>  
+          <HeaderItem  
+            title={'فروشگاه زیوران'}  
+            title_color={'#FFFFFF'}  
+            subtitle={'فروشگاه زیبا رویان'}  
+            icon={<img src={logo} style={{width:"50px" , marginRight:"10px" }} />}  
+            alt='Logo'  
+          />  
+          <div className='flex flex-row w-[80%] justify-between items-center'>  
+            <div className='flex flex-row gap-[4rem]'>  
+              <HeaderItem  
+                title_color={'#000'}  
+                subtitle={'فروشگاه زیوران'}  
+                title={'پشتیبانی:'}  
+                subtitle_color={'gray'}  
+                icon={<FiPhoneCall className='text-2xl text-[#FF4D6D]' />}  
+              />  
+              <HeaderItem  
+                title_color={'#000'}  
+                subtitle={'فروشگاه زیوران'}  
+                title={'آدرس فروشگاه:'}  
+                subtitle_color={'gray'}  
+                icon={<FiMapPin className='text-2xl text-[#FF4D6D]' />}  
+              />  
+            </div>  
+            <Socialicons />  
+          </div>  
+        </div>  
+      </header>  
+      <Navbar />  
+    </>  
+  );  
+};  
 
 const PhoneHeader = () => {  
   const [showPhoneMenu, setShowPhoneMenu] = useState(false);  
@@ -59,7 +62,6 @@ const PhoneHeader = () => {
   const handleClose = () => {  
     setShowPhoneMenu(false);  
   };  
-
 
   return (  
     <>  
@@ -114,25 +116,25 @@ const PhoneHeader = () => {
   );  
 };  
 
-const Header = () => {
-  const [isWide, setIsWide] = useState(window.innerWidth > 1100);
+const Header = () => {  
+  const [isWide, setIsWide] = useState(window.innerWidth > 1100);  
 
-  const handleResize = useCallback(() => {
-    setIsWide(window.innerWidth > 1100);
-  }, []);
+  const handleResize = useCallback(() => {  
+    setIsWide(window.innerWidth > 1100);  
+  }, []);  
 
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [handleResize]);
+  useEffect(() => {  
+    window.addEventListener('resize', handleResize);  
+    return () => {  
+      window.removeEventListener('resize', handleResize);  
+    };  
+  }, [handleResize]);  
 
-  return (
-    <>
-      {isWide ? <PcHeader /> : <PhoneHeader />}
-    </>
-  );
-};
+  return (  
+    <>  
+      {isWide ? <PcHeader /> : <PhoneHeader />}  
+    </>  
+  );  
+};  
 
 export default Header;
