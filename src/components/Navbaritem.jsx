@@ -45,31 +45,31 @@ const navbarOptions = [
   {
     title: '',
     icon: <FiUser className='text-xl text-[#000] group-hover:text-[gray]' />,
-    link: 'account'
+    link: 'account',
   },
   {
     title: '',
-    icon: <FiShoppingCart className='text-xl text-[#000] group-hover:text-[gray]' />,
-    link: 'cart'
+    icon: (
+      <FiShoppingCart className='text-xl text-[#000] group-hover:text-[gray]' />
+    ),
+    link: 'cart',
   },
   {
     title: '',
     icon: <FiSearch className='text-xl text-[#000] group-hover:text-[gray]' />,
-    link: 'home'
-  }
+    link: 'home',
+  },
 ]
 
 const NavbarItem = () => {
   return (
     <div className='flex flex-row justify-between items-center  p-3'>
-
-      <div  className='flex flex-row gap-10'>
-
-        {navbarItems.map((item) => {
+      <div className='flex flex-row gap-10'>
+        {navbarItems.map((item, index) => {
           const { link, title, icon } = item
           return (
             <NavLink
-              id={title}
+              key={index}
               to={link}
               className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
             >
@@ -83,13 +83,12 @@ const NavbarItem = () => {
         })}
       </div>
 
-      <div  className='flex flex-row-reverse gap-5'>
-
-        {navbarOptions.map((item) => {
+      <div className='flex flex-row-reverse gap-5'>
+        {navbarOptions.map((item, index) => {
           const { link, title, icon } = item
           return (
             <NavLink
-              id={title}
+              key={index}
               to={link}
               className='flex flex-row items-end gap-2 group hover:text-[#FF4D6D] hover:transition-all transition-all'
             >
@@ -102,7 +101,6 @@ const NavbarItem = () => {
           )
         })}
       </div>
-
     </div>
   )
 }
