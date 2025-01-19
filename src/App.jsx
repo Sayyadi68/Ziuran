@@ -22,6 +22,8 @@ import {
 import products from './pages/productsInfo'
 import blogsData from './pages/blogsTestForHme'
 
+
+
 function App() {
   const router = createBrowserRouter([
     {
