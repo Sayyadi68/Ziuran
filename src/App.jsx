@@ -11,6 +11,7 @@ import {
   CurrBlogPage,
   Login,
   Cart,
+  DashBoard,
 } from './pages'
 import {
   ProductsCategory,
@@ -107,6 +108,9 @@ function App() {
         { path: 'cart', element: <Cart /> },
         { path: 'blog/:id', element: <CurrBlogPage/> },
         { path: 'products/:id', element: <SingleProduct /> },
+
+        { path: 'account/:page', element: <DashBoard /> },
+
       ],
     },
   ])
