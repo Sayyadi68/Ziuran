@@ -87,32 +87,32 @@ function AuthPage() {
           </form>
         ) : (
           <form className="w-full max-w-sm" onSubmit={handleOtpSubmit}>
-            <div className="mb-5">
-              <label htmlFor="otp" className="block text-sm text-gray-200 mb-2 font-[IranSans]">
+            <div className="mb-6">
+              <label htmlFor="otp" className="block text-sm text-gray-300 mb-2 font-[IranSans] font-medium">
                 کد یکبار مصرف *
               </label>
-              <div className="flex justify-center space-x-2 mb-4">
+              <div className="flex flex-row-reverse justify-center space-x-2 mb-5">
                 {[...Array(6)].map((_, index) => (
                   <input
                     key={index}
                     type="text"
                     maxLength="1"
-                    className="w-10 h-10 bg-[#2E2E2E] border border-[#4D4D4D] rounded-md text-center text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#FFCA28] transition mx-3"
+                    className="w-11 h-11 bg-[#2A2A2A] border-2 border-[#505050] rounded-lg text-center text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#FFD700] shadow-sm "
                     ref={(el) => (inputsRef.current[index] = el)}
                     value={otp[index]}
                     onChange={(e) => handleInputChange(e, index)}
                   />
                 ))}
               </div>
-              <p className="text-xs text-gray-400 text-center mb-3 font-[IranSans]">
+              <p className="text-xs text-gray-500 text-center mb-4 font-[IranSans]">
                 کد دریافت نکردید؟{' '}
-                <a href="#" className="text-[#FFCA28] hover:underline">
+                <a href="#" className="text-[#FFD700] hover:underline font-medium">
                   ارسال مجدد کد
                 </a>
               </p>
               <button
                 type="submit"
-                className="w-full bg-[#FFCA28] text-black font-semibold py-2.5 rounded-md hover:bg-[#FFB300] transition-colors duration-200"
+                className="w-full bg-[#FFD700] text-black font-bold py-2.5 rounded-lg hover:bg-[#FFC107] transition-colors duration-200 shadow-md"
               >
                 ورود
               </button>
