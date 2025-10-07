@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { BsCartX } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { decrementQuantity, incrementQuantity, applyDiscount, removeFromCart } from "../redux/cartSlice";
+import UserLocations from '../components/UserAddress';
+
 
 const Cart = () => {
     const dispatch = useDispatch();
@@ -35,8 +37,9 @@ const Cart = () => {
         <div className="flex flex-col lg:flex-row justify-center gap-10 w-full p-4 md:p-8 ">
             {products.length > 0 ? (
                 <>
-                    <div className="w-full h-full lg:w-[60%] p-4 md:p-6 bg-white shadow rounded-lg">
-                        <div className="overflow-hidden">
+                    <div className="w-full h-full lg:w-[60%] ">
+                        <UserLocations/>
+                        <div className="bg-[#272727] rounded-xl p-8 mt-10">
                             <div className="md:hidden">
                                 <div className="flex flex-col gap-4">
                                     {products.map((product) => (
@@ -149,6 +152,7 @@ const Cart = () => {
                             </button>
                         </div>
                     </div>
+
                     <div className="w-full h-full lg:w-[25%] mt-4 lg:mt-0 bg-white shadow rounded-lg p-4 md:p-6">
                         <div className="font-medium">
                             <p>جمع کل سبد خرید:</p>
