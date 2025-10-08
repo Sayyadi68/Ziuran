@@ -307,19 +307,19 @@ const Modal = ({ isOpen, onClose, title, children, onSubmit }) => {
 // Order Item Component
 const OrderItem = ({ item, index }) => (
   <tr className="border-b border-gray-200">
-    <td className="p-3 text-center text-gray-700 font-[Byekan]">{index + 1}.</td>
-    <td className="p-3 text-gray-700 font-[Byekan]">
+    <td className="p-3 text-center text-white font-[Byekan]">{index + 1}.</td>
+    <td className="p-3 text-white font-[Byekan]">
       <div>{item.product_name}</div>
       {item.product_weight && <div className="text-sm text-gray-500">{item.product_weight}</div>}
     </td>
-    <td className="p-3 text-center text-gray-700 font-[Byekan]">{formatNumber(item.quantity)} عدد</td>
-    <td className="p-3 text-center text-gray-700 font-[Byekan]">{formatNumber(item.original_unit_price)} تومان</td>
-    <td className="p-3 text-center text-gray-700 font-[Byekan]">
+    <td className="p-3 text-center text-white font-[Byekan]">{formatNumber(item.quantity)} عدد</td>
+    <td className="p-3 text-center text-white font-[Byekan]">{formatNumber(item.original_unit_price)} تومان</td>
+    <td className="p-3 text-center text-white font-[Byekan]">
       {item.discount_percentage ? (
         <span className="text-orange-500">{item.discount_percentage}% {formatNumber(item.original_unit_price - item.unit_price)} تومان</span>
       ) : '-'}
     </td>
-    <td className="p-3 text-center text-gray-700 font-[Byekan]">{formatNumber(item.total_price)} تومان</td>
+    <td className="p-3 text-center text-white font-[Byekan]">{formatNumber(item.total_price)} تومان</td>
   </tr>
 );
 
@@ -383,8 +383,8 @@ const Order = ({ order }) => {
     <div className="bg-gray-800 p-6 rounded-lg shadow-md mb-6 text-white font-[Byekan]">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-bold">{formatJalaliVerbose(order.created_at)}</h3>
-        <div className="text-sm text-gray-400">
-          {order.created_at} | {order.reference_id || '-'} | پرداخت آنلاین
+        <div className="text-sm text-gray-200">
+          {order.created_at}   |   {order.reference_id || '-'}   |   پرداخت آنلاین
         </div>
       </div>
       <div className="mb-4">
@@ -401,11 +401,11 @@ const Order = ({ order }) => {
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-b border-gray-600">
-              <th className="p-2 text-left">نام محصول</th>
-              <th className="p-2 text-left">تعداد محصول</th>
-              <th className="p-2 text-left">قیمت اصلی کالا(ها)</th>
-              <th className="p-2 text-left">تخفیف کالا</th>
-              <th className="p-2 text-left">قیمت کل</th>
+              <th className="p-2 text-left text-white">نام محصول</th>
+              <th className="p-2 text-left text-white">تعداد محصول</th>
+              <th className="p-2 text-left text-white">قیمت اصلی کالا(ها)</th>
+              <th className="p-2 text-left text-white">تخفیف کالا</th>
+              <th className="p-2 text-left text-white">قیمت کل</th>
             </tr>
           </thead>
           <tbody>
@@ -539,7 +539,7 @@ const BuyHistory = () => {
   });
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
       <h1 className="text-2xl font-bold mb-6">تاریخچه سفارشات</h1>
 
       {/* Tabs */}
@@ -588,42 +588,42 @@ const Dashboard = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="bg-gray-100 flex flex-col lg:flex-row">
-      <aside className="bg-white w-full lg:w-1/6 p-6 border-r">
-        <h2 className="text-xl font-bold mb-6 font-[Byekan]">حساب کاربری من</h2>
+    <div className="flex flex-col lg:flex-row">
+      <aside className="bg-[#272727] w-full lg:w-1/6 p-6 border-r">
+        <h2 className="text-xl font-bold mb-6 font-[Byekan] text-white">حساب کاربری من</h2>
         <nav>
           <ul className="space-y-4 flex flex-col">
             <Link
               to="/account/dashboard"
-              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse ${isActive("/account/dashboard") ? "text-[#FF4D6D]" : "text-gray-700"}`}
+              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/dashboard") ? "text-[#C5A253]" : "text-white"}`}
             >
               <FaTachometerAlt />
               <span>پیشخوان</span>
             </Link>
             <Link
               to="/account/orders"
-              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse ${isActive("/account/orders") ? "text-[#FF4D6D]" : "text-gray-700"}`}
+              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/orders") ? "text-[#C5A253]" : "text-white"}`}
             >
               <FaShoppingCart />
               <span>سفارش‌ها</span>
             </Link>
             <Link
               to="/account/userdetail"
-              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse ${isActive("/account/userdetail") ? "text-[#FF4D6D]" : "text-gray-700"}`}
+              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/userdetail") ? "text-[#C5A253]" : "text-white"}`}
             >
               <FaUser />
               <span>اطلاعات حساب</span>
             </Link>
             <Link
               to="/account/favorites"
-              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse ${isActive("/account/favorites") ? "text-[#FF4D6D]" : "text-gray-700"}`}
+              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/favorites") ? "text-[#C5A253]" : "text-white"}`}
             >
               <FaHeart />
               <span>علاقه‌مندی</span>
             </Link>
             <Link
               to="/account/logout"
-              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse ${isActive("/account/logout") ? "text-[#FF4D6D]" : "text-gray-700"}`}
+              className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/logout") ? "text-[#C5A253]" : "text-white"}`}
             >
               <FaSignOutAlt />
               <span>خروج</span>
@@ -632,8 +632,8 @@ const Dashboard = () => {
         </nav>
       </aside>
 
-      <main className="flex-1 p-6">
-        <div className="">
+      <main className="flex-1 py-10">
+        <div className="min-w-[320px] mx-auto">
 
           {isActive("/account/dashboard") ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -671,87 +671,78 @@ const Dashboard = () => {
           {isActive("/account/orders") ? <BuyHistory /> : null}
 
           {isActive('/account/userdetail') && (
-            <div className="max-w-3xl mx-auto bg-gray-900 p-6 rounded-lg text-white font-[Byekan]">
-              <h2 className="text-lg font-bold mb-4">اطلاعات حساب کاربری</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium">نام</label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white shadow-sm focus:ring-purple-500 focus:border-purple-500 p-2 text-sm"
-                      placeholder="نام"
-                    />
+            <div className="max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
+
+              <div
+                className="mb-4 p-4 rounded-lg shadow bg-[#272727] text-white font-[Byekan]"
+              >
+
+                <h2 className="text-lg font-bold mb-4">اطلاعات حساب کاربری</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium">نام</label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
+                        placeholder="نام"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium">نام خانوادگی</label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
+                        placeholder="نام خانوادگی"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium">نام خانوادگی</label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white shadow-sm focus:ring-purple-500 focus:border-purple-500 p-2 text-sm"
-                      placeholder="نام خانوادگی"
-                    />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium">شماره تلفن</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
+                        placeholder="شماره تلفن"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium">تاریخ تولد</label>
+                      <input
+                        type="date"
+                        name="birthDate"
+                        value={formData.birthDate}
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium">نام نمایشی</label>
-                  <input
-                    type="text"
-                    name="displayName"
-                    value={formData.displayName}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white shadow-sm focus:ring-purple-500 focus:border-purple-500 p-2 text-sm"
-                    placeholder="نام نمایشی"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium">شماره تلفن</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white shadow-sm focus:ring-purple-500 focus:border-purple-500 p-2 text-sm"
-                    placeholder="شماره تلفن"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium">تاریخ تولد</label>
-                  <input
-                    type="date"
-                    name="birthDate"
-                    value={formData.birthDate}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white shadow-sm focus:ring-purple-500 focus:border-purple-500 p-2 text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium">آدرس ایمیل</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white shadow-sm focus:ring-purple-500 focus:border-purple-500 p-2 text-sm"
-                    placeholder="آدرس ایمیل"
-                  />
-                </div>
-                <div className="flex justify-center">
-                  <button
-                    type="submit"
-                    className="py-2 px-4 bg-purple-700 text-white rounded-md shadow hover:bg-purple-800 focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 text-sm transition"
-                  >
-                    ثبت تغییرات
-                  </button>
-                </div>
-              </form>
-              <UserLocations/>
-              
+
+
+                  <div className="flex justify-center">
+                    <button
+                      type="submit"
+                      className="py-3 px-5 font-bold bg-[#7B2C3F] text-white rounded-md shadow text-sm transition"
+                    >
+                      ثبت تغییرات
+                    </button>
+                  </div>
+                </form>
+
+              </div>
+
+              <UserLocations />
+
             </div>
           )}
 

@@ -12,7 +12,7 @@ const HomeLayout = () => {
   return (
     <div>
       <Header />
-      <section className='py-10 bg-[#3A3A3A] '>
+      <section className='bg-[#3A3A3A] '>
         {isLoading ? <Loading /> : <Outlet />}
       </section>
       <Footer />
