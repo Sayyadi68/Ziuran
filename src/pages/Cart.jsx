@@ -44,7 +44,7 @@ const Cart = () => {
     const totalPayable = subtotal + shippingCost;
 
     return (
-        <div className="flex flex-col lg:flex-row justify-center gap-6 w-full p-4 md:p-8">
+        <div className="flex flex-col lg:flex-row justify-center gap-6 w-full p-4 md:p-8 md:max-w-[1490px] mx-auto">
             {products.length > 0 ? (
                 <>
                     {/* بخش سبد خرید */}
