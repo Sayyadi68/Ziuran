@@ -751,11 +751,7 @@ const Dashboard = () => {
                 </div>
               </form>
               <UserLocations/>
-              <div className="flex justify-center mt-6">
-                <button className="py-2 px-4 bg-purple-700 text-white rounded-md shadow hover:bg-purple-800 focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 text-sm transition">
-                  + افزودن آدرس جدید
-                </button>
-              </div>
+              
             </div>
           )}
 
