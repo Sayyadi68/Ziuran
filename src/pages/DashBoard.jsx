@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaTachometerAlt, FaShoppingCart, FaUser, FaHeart, FaSignOutAlt, FaMapMarkerAlt, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaTachometerAlt, FaShoppingCart, FaUser, FaHeart, FaSignOutAlt, FaCreditCard, FaMapMarkerAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import UserLocations from '../components/UserAddress';
 
 
@@ -10,7 +10,7 @@ const ordersData = [
     id: 1,
     created_at: '1404/06/21 22:13',
     reference_id: '1267148788',
-    delivery_status: 'در حال ارسال',
+    delivery_status: "تحویل شده",
     delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
     address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
     receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
@@ -257,7 +257,67 @@ const ordersData = [
     },
     status: 'canceled',
     color: 'red',
-    progress: 0,
+    progress: 4,
+  },
+  {
+    id: 5,
+    created_at: '1404/06/21 22:13',
+    reference_id: '1267148788',
+    delivery_status: 'در حال ارسال',
+    delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
+    address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
+    receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
+    items: [
+      {
+        id: 1,
+        product_name: 'چیپس نمکی مزمز',
+        product_weight: '۶۰ گرم',
+        unit_price: 1000,
+        original_unit_price: 3553543,
+        discount_percentage: 23,
+        quantity: 1,
+        total_price: 1000,
+        product_image: 'https://example.com/chips1.jpg',
+      },
+      {
+        id: 2,
+        product_name: 'چیپس نمکی مزمز',
+        product_weight: '۶۰ گرم',
+        unit_price: 1000,
+        original_unit_price: 3553543,
+        discount_percentage: 23,
+        quantity: 1,
+        total_price: 1000,
+        product_image: 'https://example.com/chips2.jpg',
+      },
+      {
+        id: 3,
+        product_name: 'چیپس نمکی مزمز',
+        product_weight: '۶۰ گرم',
+        unit_price: 1000,
+        original_unit_price: 3553543,
+        discount_percentage: 23,
+        quantity: 1,
+        total_price: 1000,
+        product_image: 'https://example.com/chips3.jpg',
+      },
+    ],
+    shipping_cost: 20000,
+    original_items_total: 591000,
+    total_discount_amount: 28000,
+    total_discount_percentage: 5.5,
+    amount_paid: 583000,
+    payment_info: {
+      card_holder: 'سید علی موسوی مجاب',
+      card_number: '6104-14**-****-3315',
+      date_time: '1404/06/21 - 23:12:56',
+      tracking_number: '588371234',
+      reference_id: '1267148788',
+    },
+    refund_info: null,
+    status: 'current',
+    color: 'green',
+    progress: 2, // Completed stages
   },
 ];
 
@@ -323,81 +383,190 @@ const OrderItem = ({ item, index }) => (
   </tr>
 );
 
-// Progress Bar Component
+
+const getStageColor = (status) => {
+  if (status.includes("لغو")) {
+    return "#EF4444"; // قرمز برای لغو
+  } else if (status.includes("مرجوع")) {
+    return "#F59E0B"; // نارنجی برای مرجوع
+  }
+  switch (status) {
+    case "ثبت شده":
+      return "#3B82F6";
+    case "در حال آماده‌سازی":
+      return "#3B82F6";
+    case "در حال ارسال":
+      return "#22C55E"; // سبز
+    case "تحویل شده":
+      return "#16A34A"; // سبز پررنگ
+    default:
+      return "#A3A3A3";
+  }
+};
+const getProgressFromStatus = (deliveryStatus) => {
+  if (deliveryStatus.includes("لغو") || deliveryStatus.includes("مرجوع")) {
+    return 4;
+  }
+  switch (deliveryStatus) {
+    case "ثبت شده":
+      return 1;
+    case "در حال آماده‌سازی":
+      return 2;
+    case "در حال ارسال":
+      return 3;
+    case "تحویل شده":
+      return 4;
+    default:
+      return 1;
+  }
+};
+
 const ProgressBar = ({ order }) => {
-  const stages = ['آدرس', 'پرداخت', 'ارسال', 'تحویل'];
-  const colorClass = getColorClass(order.color, 'bg');
-  const textColorClass = getColorClass(order.color, 'text');
-  const isCanceled = order.status === 'canceled';
+  const stages = ["تایید شده", "آماده‌سازی", "تحویل به پیک", "تحویل"]; // ترتیب طبیعی، با CSS معکوس میشه
+
+  if (!order || !order.delivery_status) {
+    return <div className="text-red-500 font-[Byekan] text-sm">خطا: اطلاعات سفارش معتبر نیست.</div>;
+  }
+
+  const progress = getProgressFromStatus(order.delivery_status);
+  const color = getStageColor(order.delivery_status);
+  const isCanceled = order.delivery_status.includes("لغو") || order.delivery_status.includes("مرجوع");
+
+  const stageStyles = useMemo(() => {
+    return stages.map((_, index) => {
+      const isCompleted = index < progress - 1;
+      const isCurrent = index === progress - 1;
+
+      let bgColor = "white";
+      let borderColor = "#D1D5DB";
+      let icon = null;
+
+      if (isCanceled) {
+        bgColor = getStageColor(order.delivery_status); // رنگ بر اساس نوع (قرمز یا نارنجی)
+        borderColor = getStageColor(order.delivery_status);
+        icon = <span className="text-white font-bold">X</span>;
+      } else if (isCompleted) {
+        bgColor = color;
+        borderColor = color;
+        icon = <span className="text-white">✓</span>;
+      } else if (isCurrent) {
+        bgColor = color;
+        borderColor = color;
+        icon = <span className="w-2 h-2 bg-white rounded-full"></span>;
+      }
+
+      return { bgColor, borderColor, icon, isCompleted, isCurrent };
+    });
+  }, [progress, color, isCanceled, order.delivery_status]);
 
   return (
-    <div className="flex items-center justify-between mb-4">
-      {stages.map((stage, index) => (
-        <div key={stage} className="flex items-center">
-          <div className="relative">
-            <div className={`w-6 h-6 rounded-full ${index < order.progress ? colorClass : 'bg-white'} border-2 border-${order.color}-500 flex items-center justify-center`}>
-              {isCanceled ? (
-                <span className={textColorClass}>X</span>
-              ) : (
-                index < order.progress && <span className="text-white">✓</span>
-              )}
+    <div
+      className="flex items-center justify-between mb-8 w-full flex-row "
+      role="progressbar"
+      aria-label={`وضعیت سفارش: ${order.delivery_status}`}
+    >
+      {stages.map((stage, index) => {
+        const { bgColor, borderColor, icon, isCompleted, isCurrent } = stageStyles[index];
+
+        return (
+          <div key={stage} className="flex items-center w-full relative">
+            {/* دایره */}
+            <div className="relative flex flex-col items-center">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300"
+                style={{ backgroundColor: bgColor, borderColor }}
+                aria-hidden="true"
+              >
+                {icon}
+              </div>
+              {/* عنوان */}
+              <div className="absolute top-10 text-sm text-gray-300 font-[Byekan] text-center whitespace-nowrap">
+                {stage}
+              </div>
             </div>
-            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-sm text-gray-600 font-[Byekan] whitespace-nowrap">
-              {stage}
-            </div>
+
+            {/* خط بین استیج‌ها */}
+            {index < stages.length - 1 && (
+              <div className="flex-1 h-1 mx-2 relative" dir='rtl'>
+                {/* پس‌زمینه خاکستری */}
+                <div className="absolute top-0 right-0 w-full h-full bg-gray-600 rounded-full" dir='rtl'></div>
+
+                {/* بخش رنگی */}
+                <div
+                  className="absolute top-0 right-0 h-full rounded-full transition-all duration-500" dir='rtl'
+                  style={{
+                    backgroundColor: isCanceled ? getStageColor(order.delivery_status) : color,
+                    width: isCanceled ? "100%" : isCompleted ? "100%" : isCurrent ? "50%" : "0%",
+                  }}
+                ></div>
+              </div>
+            )}
           </div>
-          {index < stages.length - 1 && (
-            <div className={`flex-1 h-0.5 mx-2 ${index < order.progress - 1 ? colorClass : 'bg-gray-300'}`}></div>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
 
-// Order Component
 const Order = ({ order }) => {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const statusColor = getColorClass(order.color, 'text');
 
   const handleCancelSubmit = () => {
     setSuccessMessage('درخواست شما با موفقیت ثبت گردید، گزارش شما درصورت تایید همکاران ما تا یک ساعت آینده به کیف پول شما واریز خواهد شد.');
-    setTimeout(() => {
-      setIsCancelModalOpen(false);
-      setSuccessMessage('');
-    }, 2000);
   };
 
   const handleReturnSubmit = () => {
     setSuccessMessage('درخواست شما با موفقیت ثبت گردید، گزارش شما درصورت تایید همکاران ما تا یک ساعت آینده به کیف پول شما واریز خواهد شد.');
-    setTimeout(() => {
-      setIsReturnModalOpen(false);
-      setSuccessMessage('');
-    }, 2000);
   };
 
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-md mb-6 text-white font-[Byekan]">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold">{formatJalaliVerbose(order.created_at)}</h3>
-        <div className="text-sm text-gray-200">
-          {order.created_at}   |   {order.reference_id || '-'}   |   پرداخت آنلاین
+      <div className="flex md:flex-row flex-col justify-between items-start gap-3 md:items-center mb-4">
+        <h3 className="text-lg text-[#C5A253] font-bold">{formatJalaliVerbose(order.created_at)}</h3>
+        <div className="text-md text-gray-200 flex flex-col sm:flex-row-reverse gap-4 ">
+          <span>{order.created_at}</span>
+          <span className='hidden sm:block'>|</span>
+          <span>{order.reference_id || '-'}</span>
+          <span className='hidden sm:block'>|</span>
+          <span className='flex flex-row gap-3 items-center'>
+            <FaCreditCard className="text-white" />پرداخت آنلاین
+          </span>
         </div>
       </div>
+
       <div className="mb-4">
         <span className="font-bold">وضعیت: </span>
         <span className={statusColor}>{order.delivery_status}</span>
       </div>
-      <ProgressBar order={order} />
-      <div className="flex justify-center gap-4 mb-4">
-        {order.items.map((item) => (
-          <img key={item.id} src={item.product_image} alt={item.product_name} className="w-16 h-16 object-cover rounded" />
-        ))}
+
+      <div className="flex justify-center items-center w-full">
+        <ProgressBar order={order} />
       </div>
-      <div className="mb-4">
+
+      {/* نمایش آدرس و اطلاعات گیرنده در صورت تحویل‌شده بودن سفارش */}
+      {order.status === 'delivered' && (
+        <div className="text-sm mb-4 mt-4">
+          <div>آدرس: {order.address}</div>
+          <div>گیرنده: {order.receiver}</div>
+          <div>زمان تحویل: {order.delivery_time}</div>
+        </div>
+      )}
+
+      {(order.status === 'returned' || order.status === 'canceled') && order.description && (
+        <div>
+          توضیحات:  
+          <span className="text-sm mb-4 text-red-500">
+            {order.description}
+          </span>
+        </div>
+      )}
+
+      <div className="my-10">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-b border-gray-600">
@@ -460,75 +629,161 @@ const Order = ({ order }) => {
         <button className="bg-green-500 text-white px-4 py-2 rounded">
           سفارش مجدد فاکتور
         </button>
-        {(order.status === 'current') && (
+        {order.status === 'current' && (
           <button onClick={() => setIsCancelModalOpen(true)} className="bg-red-500 text-white px-4 py-2 rounded">
             لغو سفارش
           </button>
         )}
       </div>
 
-      {/* Cancel Modal */}
-      <Modal
-        isOpen={isCancelModalOpen}
-        onClose={() => setIsCancelModalOpen(false)}
-        title="دلیل لغو سفارش"
-        onSubmit={handleCancelSubmit}
+     {/* Cancel Modal */}
+      <div
+        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${
+          isCancelModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
       >
-        {successMessage ? (
-          <div className="text-green-500">{successMessage}</div>
-        ) : (
-          <>
-            <select
-              value={cancelReason}
-              onChange={(e) => setCancelReason(e.target.value)}
-              className="w-full p-2 border rounded mb-4"
-            >
-              <option value="">انتخاب کنید</option>
-              <option value="دیر کرد در ارسال">دیر کرد در ارسال</option>
-              <option value="نبودن در خانه">نبودن در خانه</option>
-            </select>
-            <textarea
-              placeholder="دلیل"
-              className="w-full p-2 border rounded"
-            ></textarea>
-          </>
-        )}
-      </Modal>
+        <div className="bg-[#272727] text-gray-400 p-6 rounded-lg max-w-md w-full mx-4">
+          <h2 className="text-yellow-500 text-lg font-bold mb-4">دلیل لغو سفارش</h2>
+          {successMessage ? (
+            <div className="text-center">
+              <div className="text-yellow-500 mb-4">{successMessage}</div>
+              <button
+                onClick={() => {
+                  setIsCancelModalOpen(false);
+                  setCancelReason('');
+                  setSuccessMessage('');
+                }}
+                className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                بستن
+              </button>
+            </div>
+          ) : (
+            <>
+              <select
+                value={cancelReason}
+                onChange={(e) => setCancelReason(e.target.value)}
+                className="w-full p-2 border border-gray-600 bg-gray-800 text-gray-400 rounded mb-4"
+              >
+                <option value="">انتخاب کنید</option>
+                <option value="دیر کرد در ارسال">دیر کرد در ارسال</option>
+                <option value="نبودن در خانه">نبودن در خانه</option>
+              </select>
+              <textarea
+                placeholder="دلیل"
+                className="w-full p-2 border border-gray-600 bg-gray-800 text-gray-400 rounded mb-4"
+              ></textarea>
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => {
+                    setIsCancelModalOpen(false);
+                    setCancelReason('');
+                    setSuccessMessage('');
+                  }}
+                  className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600"
+                >
+                  لغو
+                </button>
+                <button
+                  onClick={() => {
+                    if (cancelReason) {
+                      handleCancelSubmit();
+                    }
+                  }}
+                  className={`bg-red-800 text-white px-4 py-2 rounded ${
+                    cancelReason ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
+                  }`}
+                >
+                  تأیید
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
 
       {/* Return Modal */}
-      <Modal
-        isOpen={isReturnModalOpen}
-        onClose={() => setIsReturnModalOpen(false)}
-        title="دلیل مرجوع کردن سفارش"
-        onSubmit={handleReturnSubmit}
+      <div
+        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${
+          isReturnModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
       >
-        {successMessage ? (
-          <div className="text-green-500">{successMessage}</div>
-        ) : (
-          <>
-            <div className="mb-4">
-              <h4>انتخاب کالای مرجوعی</h4>
-              {order.items.map((item) => (
-                <div key={item.id} className="flex justify-between">
-                  <div>
-                    {item.product_name} ({item.product_weight})
-                  </div>
-                  <div>{formatNumber(item.total_price)} تومان</div>
-                </div>
-              ))}
+        <div className="bg-[#272727] text-gray-400 p-6 rounded-lg max-w-md w-full mx-4">
+          <h2 className="text-yellow-500 text-lg font-bold mb-4">دلیل مرجوع کردن سفارش</h2>
+          {successMessage ? (
+            <div className="text-center">
+              <div className="text-yellow-500 mb-4">{successMessage}</div>
+              <button
+                onClick={() => {
+                  setIsReturnModalOpen(false);
+                  setSelectedItems([]);
+                  setSuccessMessage('');
+                }}
+                className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                بستن
+              </button>
             </div>
-            <textarea
-              placeholder="دلیل"
-              className="w-full p-2 border rounded"
-            ></textarea>
-          </>
-        )}
-      </Modal>
+          ) : (
+            <>
+              <div className="mb-4">
+                <h4 className="text-yellow-500 font-bold">انتخاب کالای مرجوعی</h4>
+                {order.items.map((item) => (
+                  <div key={item.id} className="flex justify-between items-center py-2">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems.includes(item.id)}
+                        onChange={() => {
+                          setSelectedItems((prev) =>
+                            prev.includes(item.id)
+                              ? prev.filter((id) => id !== item.id)
+                              : [...prev, item.id]
+                          );
+                        }}
+                        className="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded"
+                      />
+                      <span>{item.product_name} ({item.product_weight})</span>
+                    </div>
+                    <div>{formatNumber(item.total_price)} تومان</div>
+                  </div>
+                ))}
+              </div>
+              <textarea
+                placeholder="دلیل"
+                className="w-full p-2 border border-gray-600 bg-gray-800 text-gray-400 rounded mb-4"
+              ></textarea>
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => {
+                    setIsReturnModalOpen(false);
+                    setSelectedItems([]);
+                    setSuccessMessage('');
+                  }}
+                  className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600"
+                >
+                  لغو
+                </button>
+                <button
+                  onClick={() => {
+                    if (selectedItems.length > 0) {
+                      handleReturnSubmit();
+                    }
+                  }}
+                  className={`bg-red-800 text-white px-4 py-2 rounded ${
+                    selectedItems.length > 0 ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
+                  }`}
+                >
+                  تأیید
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
-
-
 // BuyHistory Component
 const BuyHistory = () => {
   const [activeTab, setActiveTab] = useState('current');
@@ -548,7 +803,7 @@ const BuyHistory = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded ${activeTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2  ${activeTab === tab ? 'text-[#C5A253] border-b-[3px] border-[#C5A253]' : ''}`}
           >
             {tab === 'current' ? 'جاری' : tab === 'delivered' ? 'تحویل داده شده' : tab === 'returned' ? 'مرجوع شده' : 'لغو شده'}
           </button>
@@ -636,7 +891,7 @@ const Dashboard = () => {
         <div className="min-w-[320px] mx-auto">
 
           {isActive("/account/dashboard") ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
               <Link
                 to="/account/userdetail"
                 className="flex flex-col items-center justify-center p-4 bg-gray-100 rounded-md shadow hover:bg-gray-200 transition"
