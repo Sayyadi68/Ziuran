@@ -6,66 +6,66 @@ import UserLocations from '../components/UserAddress';
 
 // Simulated orders data with added fields for images and colors
 const ordersData = [
-  {
-    id: 1,
-    created_at: '1404/06/21 22:13',
-    reference_id: '1267148788',
-    delivery_status: "تحویل شده",
-    delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
-    address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-    receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-    items: [
-      {
-        id: 1,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips1.jpg',
-      },
-      {
-        id: 2,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips2.jpg',
-      },
-      {
-        id: 3,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips3.jpg',
-      },
-    ],
-    shipping_cost: 20000,
-    original_items_total: 591000,
-    total_discount_amount: 28000,
-    total_discount_percentage: 5.5,
-    amount_paid: 583000,
-    payment_info: {
-      card_holder: 'سید علی موسوی مجاب',
-      card_number: '6104-14**-****-3315',
-      date_time: '1404/06/21 - 23:12:56',
-      tracking_number: '588371234',
-      reference_id: '1267148788',
-    },
-    refund_info: null,
-    status: 'current',
-    color: 'green',
-    progress: 2, // Completed stages
-  },
+  // {
+  //   id: 1,
+  //   created_at: '1404/06/21 22:13',
+  //   reference_id: '1267148788',
+  //   delivery_status: "تحویل شده",
+  //   delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
+  //   address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
+  //   receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
+  //   items: [
+  //     {
+  //       id: 1,
+  //       product_name: 'چیپس نمکی مزمز',
+  //       product_weight: '۶۰ گرم',
+  //       unit_price: 1000,
+  //       original_unit_price: 3553543,
+  //       discount_percentage: 23,
+  //       quantity: 1,
+  //       total_price: 1000,
+  //       product_image: 'https://example.com/chips1.jpg',
+  //     },
+  //     {
+  //       id: 2,
+  //       product_name: 'چیپس نمکی مزمز',
+  //       product_weight: '۶۰ گرم',
+  //       unit_price: 1000,
+  //       original_unit_price: 3553543,
+  //       discount_percentage: 23,
+  //       quantity: 1,
+  //       total_price: 1000,
+  //       product_image: 'https://example.com/chips2.jpg',
+  //     },
+  //     {
+  //       id: 3,
+  //       product_name: 'چیپس نمکی مزمز',
+  //       product_weight: '۶۰ گرم',
+  //       unit_price: 1000,
+  //       original_unit_price: 3553543,
+  //       discount_percentage: 23,
+  //       quantity: 1,
+  //       total_price: 1000,
+  //       product_image: 'https://example.com/chips3.jpg',
+  //     },
+  //   ],
+  //   shipping_cost: 20000,
+  //   original_items_total: 591000,
+  //   total_discount_amount: 28000,
+  //   total_discount_percentage: 5.5,
+  //   amount_paid: 583000,
+  //   payment_info: {
+  //     card_holder: 'سید علی موسوی مجاب',
+  //     card_number: '6104-14**-****-3315',
+  //     date_time: '1404/06/21 - 23:12:56',
+  //     tracking_number: '588371234',
+  //     reference_id: '1267148788',
+  //   },
+  //   refund_info: null,
+  //   status: 'current',
+  //   color: 'green',
+  //   progress: 2, // Completed stages
+  // },
   {
     id: 2,
     created_at: '1404/06/21 22:13',
@@ -259,66 +259,66 @@ const ordersData = [
     color: 'red',
     progress: 4,
   },
-  {
-    id: 5,
-    created_at: '1404/06/21 22:13',
-    reference_id: '1267148788',
-    delivery_status: 'در حال ارسال',
-    delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
-    address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-    receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-    items: [
-      {
-        id: 1,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips1.jpg',
-      },
-      {
-        id: 2,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips2.jpg',
-      },
-      {
-        id: 3,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips3.jpg',
-      },
-    ],
-    shipping_cost: 20000,
-    original_items_total: 591000,
-    total_discount_amount: 28000,
-    total_discount_percentage: 5.5,
-    amount_paid: 583000,
-    payment_info: {
-      card_holder: 'سید علی موسوی مجاب',
-      card_number: '6104-14**-****-3315',
-      date_time: '1404/06/21 - 23:12:56',
-      tracking_number: '588371234',
-      reference_id: '1267148788',
-    },
-    refund_info: null,
-    status: 'current',
-    color: 'green',
-    progress: 2, // Completed stages
-  },
+  // {
+  //   id: 5,
+  //   created_at: '1404/06/21 22:13',
+  //   reference_id: '1267148788',
+  //   delivery_status: 'در حال ارسال',
+  //   delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
+  //   address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
+  //   receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
+  //   items: [
+  //     {
+  //       id: 1,
+  //       product_name: 'چیپس نمکی مزمز',
+  //       product_weight: '۶۰ گرم',
+  //       unit_price: 1000,
+  //       original_unit_price: 3553543,
+  //       discount_percentage: 23,
+  //       quantity: 1,
+  //       total_price: 1000,
+  //       product_image: 'https://example.com/chips1.jpg',
+  //     },
+  //     {
+  //       id: 2,
+  //       product_name: 'چیپس نمکی مزمز',
+  //       product_weight: '۶۰ گرم',
+  //       unit_price: 1000,
+  //       original_unit_price: 3553543,
+  //       discount_percentage: 23,
+  //       quantity: 1,
+  //       total_price: 1000,
+  //       product_image: 'https://example.com/chips2.jpg',
+  //     },
+  //     {
+  //       id: 3,
+  //       product_name: 'چیپس نمکی مزمز',
+  //       product_weight: '۶۰ گرم',
+  //       unit_price: 1000,
+  //       original_unit_price: 3553543,
+  //       discount_percentage: 23,
+  //       quantity: 1,
+  //       total_price: 1000,
+  //       product_image: 'https://example.com/chips3.jpg',
+  //     },
+  //   ],
+  //   shipping_cost: 20000,
+  //   original_items_total: 591000,
+  //   total_discount_amount: 28000,
+  //   total_discount_percentage: 5.5,
+  //   amount_paid: 583000,
+  //   payment_info: {
+  //     card_holder: 'سید علی موسوی مجاب',
+  //     card_number: '6104-14**-****-3315',
+  //     date_time: '1404/06/21 - 23:12:56',
+  //     tracking_number: '588371234',
+  //     reference_id: '1267148788',
+  //   },
+  //   refund_info: null,
+  //   status: 'current',
+  //   color: 'green',
+  //   progress: 2, // Completed stages
+  // },
 ];
 
 
@@ -559,7 +559,7 @@ const Order = ({ order }) => {
 
       {(order.status === 'returned' || order.status === 'canceled') && order.description && (
         <div>
-          توضیحات:  
+          توضیحات:
           <span className="text-sm mb-4 text-red-500">
             {order.description}
           </span>
@@ -636,11 +636,10 @@ const Order = ({ order }) => {
         )}
       </div>
 
-     {/* Cancel Modal */}
+      {/* Cancel Modal */}
       <div
-        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${
-          isCancelModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${isCancelModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
       >
         <div className="bg-[#272727] text-gray-400 p-6 rounded-lg max-w-md w-full mx-4">
           <h2 className="text-yellow-500 text-lg font-bold mb-4">دلیل لغو سفارش</h2>
@@ -690,9 +689,8 @@ const Order = ({ order }) => {
                       handleCancelSubmit();
                     }
                   }}
-                  className={`bg-red-800 text-white px-4 py-2 rounded ${
-                    cancelReason ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
-                  }`}
+                  className={`bg-red-800 text-white px-4 py-2 rounded ${cancelReason ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
+                    }`}
                 >
                   تأیید
                 </button>
@@ -704,9 +702,8 @@ const Order = ({ order }) => {
 
       {/* Return Modal */}
       <div
-        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${
-          isReturnModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${isReturnModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
       >
         <div className="bg-[#272727] text-gray-400 p-6 rounded-lg max-w-md w-full mx-4">
           <h2 className="text-yellow-500 text-lg font-bold mb-4">دلیل مرجوع کردن سفارش</h2>
@@ -770,9 +767,8 @@ const Order = ({ order }) => {
                       handleReturnSubmit();
                     }
                   }}
-                  className={`bg-red-800 text-white px-4 py-2 rounded ${
-                    selectedItems.length > 0 ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
-                  }`}
+                  className={`bg-red-800 text-white px-4 py-2 rounded ${selectedItems.length > 0 ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
+                    }`}
                 >
                   تأیید
                 </button>
@@ -784,6 +780,8 @@ const Order = ({ order }) => {
     </div>
   );
 };
+
+
 // BuyHistory Component
 const BuyHistory = () => {
   const [activeTab, setActiveTab] = useState('current');
@@ -797,8 +795,8 @@ const BuyHistory = () => {
     <div className="max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
       <h1 className="text-2xl font-bold mb-6">تاریخچه سفارشات</h1>
 
-      {/* Tabs */}
-      <div className="flex gap-4 mb-6">
+
+      <div className="flex gap-4 mb-6 ">
         {['current', 'delivered', 'returned', 'canceled'].map((tab) => (
           <button
             key={tab}
@@ -810,12 +808,18 @@ const BuyHistory = () => {
         ))}
       </div>
 
-      {/* Orders List */}
-      {filteredOrders.length > 0 ? (
-        filteredOrders.map((order) => <Order key={order.id} order={order} />)
-      ) : (
-        <div className="text-center text-gray-500">هیچ سفارشی یافت نشد.</div>
-      )}
+      {
+        filteredOrders.length > 0 ? (
+          <div className="h-[600px] overflow-auto">
+            {filteredOrders.map((order) => (
+              <Order key={order.id} order={order} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-white">هیچ سفارشی یافت نشد.</div>
+        ) 
+      }
+
     </div>
   );
 };
@@ -869,13 +873,13 @@ const Dashboard = () => {
               <FaUser />
               <span>اطلاعات حساب</span>
             </Link>
-            <Link
+            {/* <Link
               to="/account/favorites"
               className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/favorites") ? "text-[#C5A253]" : "text-white"}`}
             >
               <FaHeart />
               <span>علاقه‌مندی</span>
-            </Link>
+            </Link> */}
             <Link
               to="/account/logout"
               className={`font-[Byekan] flex items-center space-x-2 rtl:space-x-reverse text-lg ${isActive("/account/logout") ? "text-[#C5A253]" : "text-white"}`}
@@ -888,7 +892,7 @@ const Dashboard = () => {
       </aside>
 
       <main className="flex-1 py-10">
-        <div className="min-w-[320px] mx-auto">
+        <div className="min-w-[320px] mx-auto ">
 
           {isActive("/account/dashboard") ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
@@ -906,13 +910,13 @@ const Dashboard = () => {
                 <FaShoppingCart className="text-2xl text-gray-700 mb-2" />
                 <span className="text-gray-700 text-center font-[Byekan]">سفارش‌ها</span>
               </Link>
-              <Link
+              {/* <Link
                 to="/account/favorites"
                 className="flex flex-col items-center justify-center p-4 bg-gray-100 rounded-md shadow hover:bg-gray-200 transition"
               >
                 <FaHeart className="text-2xl text-gray-700 mb-2" />
                 <span className="text-gray-700 text-center font-[Byekan]">علاقه‌مندی</span>
-              </Link>
+              </Link> */}
               <Link
                 to="/account/logout"
                 className="flex flex-col items-center justify-center p-4 bg-gray-100 rounded-md shadow hover:bg-gray-200 transition"
@@ -1001,23 +1005,6 @@ const Dashboard = () => {
             </div>
           )}
 
-          {isActive("/account/favorites") && (
-            <div className="w-full flex flex-col justify-center items-center gap-3 h-full p-4 md:p-6">
-              <FaHeart className="text-[100px] text-gray-300" />
-              <h3 className="text-xl font-bold text-blue-900">
-                علاقه‌مندی‌های شما در حال حاضر خالی است.
-              </h3>
-              <p className="text-md font-medium text-gray-500 text-center">
-                علاقه‌مندی‌های شما خالی است. لطفاً ابتدا از فروشگاه محصولاتی را به علاقه‌مندی‌های خود اضافه کنید.
-              </p>
-              <Link
-                to="/products"
-                className="bg-[#FF4D6D] text-white py-2 px-4 rounded-lg shadow hover:bg-[#ff3355] transition"
-              >
-                رفتن به فروشگاه
-              </Link>
-            </div>
-          )}
         </div>
       </main>
     </div>
