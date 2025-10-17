@@ -1,138 +1,79 @@
 import React, { useState, useEffect, useCallback } from 'react';  
-import { FiPhoneCall, FiMapPin } from 'react-icons/fi';  
-import HeaderItem from './HeaderItem';  
-import Socialicons from './Socialicons';  
-import { Navbar, PhoneMenu } from '../components';  
-import { NavLink } from 'react-router-dom';  
-import logo from '../assets/logo.png'; // Ensure this path is correct  
+import { FaUser, FaShoppingBag, FaInstagram, FaSearch } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-const PcHeader = () => {  
-  return (  
-    <>  
-      <header className='border-t-[20px] border-[#FF4D6D] px-10 py-4 w-full font-extrabold font-[BYekan]'>  
-        <div className='absolute top-0 right-0 translate-y-[-125px] translate-x-[70px] -z-10'>  
-          <img  
-            src='https://pre-websites.ir/elementor/cosmetic/wp-content/uploads/2022/08/Central_Curve_shadow2-1.svg'  
-            alt='header background decoration'  
-            style={{width: '380px'}}
-          />  
-        </div>  
 
-        <div className='flex flex-row items-center justify-between'>  
-          <HeaderItem  
-            title={'فروشگاه زیوران'}  
-            title_color={'#FFFFFF'}  
-            subtitle={'فروشگاه زیبا رویان'}  
-            icon={<img src={logo} style={{width:"50px" , marginRight:"10px" }} />}  
-            alt='Logo'  
-          />  
-          <div className='flex flex-row w-[80%] justify-between items-center'>  
-            <div className='flex flex-row gap-[4rem]'>  
-              <HeaderItem  
-                title_color={'#000'}  
-                subtitle={'فروشگاه زیوران'}  
-                title={'پشتیبانی:'}  
-                subtitle_color={'gray'}  
-                icon={<FiPhoneCall className='text-2xl text-[#FF4D6D]' />}  
-              />  
-              <HeaderItem  
-                title_color={'#000'}  
-                subtitle={'فروشگاه زیوران'}  
-                title={'آدرس فروشگاه:'}  
-                subtitle_color={'gray'}  
-                icon={<FiMapPin className='text-2xl text-[#FF4D6D]' />}  
-              />  
-            </div>  
-            <Socialicons />  
-          </div>  
-        </div>  
-      </header>  
-      <Navbar />  
-    </>  
-  );  
-};  
+const PcHeader = () => {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useSelector((state) => state.user);
 
-const PhoneHeader = () => {  
-  const [showPhoneMenu, setShowPhoneMenu] = useState(false);  
+  const handleUserClick = () => {
+    navigate(isAuthenticated ? "/account/dashboard" : "/login");
+  };
 
-  const handleShow = () => {  
-    setShowPhoneMenu(true);  
-  };  
+  return (
+    <header className="sticky top-0 z-50 w-full font-extrabold bg-black/40 backdrop-blur-md border-t-8 border-[#7B2C3F] px-4 md:px-10 pb-3 text-right shadow-lg transition-all duration-300" dir="ltr">
+      {/* بالا: لوگو، جستجو و کاربر */}
+      <div className="flex flex-col md:flex-row-reverse md:items-center justify-between gap-3">
+        <a href="/" className="flex flex-row-reverse items-center gap-3 bg-[#7B2C3F]/70 backdrop-blur-sm p-3 rounded-b-[40px] flex-shrink-0">
+          <img src="/static/img/logo.png" alt="گراشل" className="w-16 md:w-20" />
+          <div>
+            <h2 className="text-[#C5A253] text-lg font-bold YekanBakh">گراشل</h2>
+            <p className="text-gray-300 text-sm md:text-base YekanBakh">فروشگاه آنلاین</p>
+          </div>
+        </a>
 
-  const handleClose = () => {  
-    setShowPhoneMenu(false);  
-  };  
+        <div className="flex-1 relative w-full md:max-w-xs" dir="rtl">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="جستجو..."
+            className="w-full bg-black/30 backdrop-blur-sm text-white placeholder-gray-400 px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#C5A253] transition-all duration-300 YekanBakh"
+          />
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><FaSearch /></span>
+        </div>
 
-  return (  
-    <>  
-      <div className="navbar bg-base-100 shadow-[0_4px_3px_0px_rgba(0,0,0,0.3)]">  
-        <div className="navbar-start">  
-          <div className="dropdown">  
-            <div className="btn btn-ghost btn-circle" onClick={handleShow}>  
-              <svg  
-                xmlns="http://www.w3.org/2000/svg"  
-                className="h-5 w-5"  
-                fill="none"  
-                viewBox="0 0 24 24"  
-                stroke="currentColor">  
-                <path  
-                  strokeLinecap="round"  
-                  strokeLinejoin="round"  
-                  strokeWidth="2"  
-                  d="M4 6h16M4 12h16M4 18h7"  
-                />  
-              </svg>  
-            </div>  
-          </div>  
-        </div>  
-        <div className="navbar-center">  
-          <NavLink to={"/"} className="btn btn-ghost text-xl">daisyUI</NavLink>  
-        </div>  
-        <div className="navbar-end">  
-          <button className="btn btn-ghost btn-circle" onClick={handleShow}>  
-            <svg  
-              xmlns="http://www.w3.org/2000/svg"  
-              className="h-5 w-5"  
-              fill="none"  
-              viewBox="0 0 24 24"  
-              stroke="currentColor">  
-              <path  
-                strokeLinecap="round"  
-                strokeLinejoin="round"  
-                strokeWidth="2"  
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"  
-              />  
-            </svg>  
-          </button>  
-        </div>  
-      </div>  
+        <div className="flex gap-4 items-center md:gap-6 mt-2 md:mt-0 flex-shrink-0" dir="rtl">
+          <button onClick={handleUserClick} className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300 flex items-center gap-1 YekanBakh">
+            <FaUser className="text-xl" />
+            <span className="text-sm">
+              {isAuthenticated
+                ? `${user?.first_name || ""} ${user?.last_name || ""}`.slice(0, 12) +
+                  ((user?.first_name?.length || 0) + (user?.last_name?.length || 0) > 12 ? "..." : "")
+                : "ورود / ثبت‌نام"}
+            </span>
+          </button>
 
-      {showPhoneMenu && (  
-        <div className="fixed inset-0 bg-[#c0c0c069] z-[20]" onClick={handleClose}></div>  
-      )}  
+          <a href="/app/basket" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
+            <FaShoppingBag className="text-xl" />
+          </a>
 
-      <PhoneMenu className={showPhoneMenu ? "transition translate-x-0" : "block z-50 translate-x-[300px] transition ease-in-out delay-150 duration-300"} />  
-    </>  
-  );  
-};  
+          <a href="#" aria-label="Instagram" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
+            <FaInstagram className="text-2xl" />
+          </a>
+        </div>
+      </div>
+
+      <nav className="mt-4">
+        <ul className="flex flex-wrap justify-center gap-4 md:gap-8">
+          <li><a href="/" className="text-[#D4AF37] hover:text-[#800020] transition-colors duration-300 YekanBakh">خانه</a></li>
+          <li><a href="/about/" className="text-[#D4AF37] hover:text-[#800020] transition-colors duration-300 YekanBakh">درباره ما</a></li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+
 
 const Header = () => {  
-  const [isWide, setIsWide] = useState(window.innerWidth > 1100);  
-
-  const handleResize = useCallback(() => {  
-    setIsWide(window.innerWidth > 1100);  
-  }, []);  
-
-  useEffect(() => {  
-    window.addEventListener('resize', handleResize);  
-    return () => {  
-      window.removeEventListener('resize', handleResize);  
-    };  
-  }, [handleResize]);  
-
+   
   return (  
     <>  
-      {isWide ? <PcHeader /> : <PhoneHeader />}  
+      <PcHeader />  
     </>  
   );  
 };  

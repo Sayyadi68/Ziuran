@@ -11,12 +11,11 @@ const HomeLayout = () => {
 
   return (
     <div>
-      <Header />
       <section className='bg-[#3A3A3A] '>
-        {isLoading ? <Loading /> : <Outlet />}
+        <Header />
+          {isLoading ? <Loading /> : <Outlet />}
+        <Footer />
       </section>
-      <Footer />
-      <PhoneBottomMenu/>
     </div>
   )
 }

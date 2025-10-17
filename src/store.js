@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './redux/cartSlice';
+import userReducer, { fetchUser, logout } from "./redux/userSlice";
 
 // بارگذاری اطلاعات سبد خرید از localStorage
 const loadCartFromLocalStorage = () => {
@@ -10,11 +11,17 @@ const loadCartFromLocalStorage = () => {
   return { items: [] };
 };
 
+const preloadedState = {
+  cart: loadCartFromLocalStorage(),
+  user: undefined, // state اولیه userReducer
+};
+
 const store = configureStore({
   reducer: {
     cart: cartReducer,
+    user: userReducer,
   },
-  preloadedState: loadCartFromLocalStorage(),
+  preloadedState,
 });
 
 // ذخیره اطلاعات سبد خرید در localStorage هر بار که تغییری در ریداکس انجام می‌شود
@@ -24,3 +31,4 @@ store.subscribe(() => {
 });
 
 export default store;
+export { fetchUser, logout };

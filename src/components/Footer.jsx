@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaTelegram, FaInstagram } from "react-icons/fa";
 
-// Import your images
 import logo from "../assets/img/logo.png";
 import percentIcon from "../assets/img/percent.png";
 import shoppingIcon from "../assets/img/shopping.png";
@@ -17,8 +17,9 @@ const headerCategories = [
 
 const Footer = () => {
   return (
-    <footer className="bg-white">
-      <div className="mx-auto w-full">
+    <footer className="bg-[#272727] text-[#BFBFBF] mt-20 pt-12 rounded-t-[12px]" dir="rtl">
+      <div className="max-w-[1200px] mx-auto">
+        {/* بخش آیکون‌ها */}
         <div id="fullWidthTabContent">
           <div
             className="p-4 md:p-8"
@@ -70,59 +71,52 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mx-auto w-full flex flex-wrap items-center justify-between px-16 pb-6">
-          <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src={logo} className="h-8" alt="ققنوس شاپ" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap text-zinc-700 YekanBakh">
-              ققنوس شاپ
-            </span>
-          </Link>
+        {/* بخش لوگو و شبکه‌های اجتماعی */}
+        <div className="flex flex-col md:flex-row items-center justify-between border-t border-[#3A3A3A] px-6 py-8 gap-6">
+          <a href="/" className="flex items-center gap-3">
+            <img src="/static/img/logo.png" className="h-20" alt="گراشل" />
+            <span className="text-2xl font-semibold text-[#C5A253] YekanBakh">گراشل</span>
+          </a>
 
           <div className="PeydaWeb flex flex-row items-center gap-3">
-            <span className="text-zinc-700">در</span>
+            <span className="text-[#C5A253]">در</span>
             <a
               href="#"
-              className="bg-orange-200 text-orange-500 w-[40px] h-[40px] rounded-[8px] block text-center pt-2"
+              className="bg-[#7B2C3F]/30 text-[#C5A253] w-10 h-10 flex items-center justify-center rounded-[10px] hover:bg-[#7B2C3F] transition"
             >
-              <i className="fa-brands fa-telegram text-[25px]"></i>
+              <FaTelegram className="text-xl" />
             </a>
             <a
               href="#"
-              className="bg-orange-200 text-orange-500 w-[40px] h-[40px] rounded-[8px] block text-center pt-2"
+              className="bg-[#7B2C3F]/30 text-[#C5A253] w-10 h-10 flex items-center justify-center rounded-[10px] hover:bg-[#7B2C3F] transition"
             >
-              <i className="fa-brands fa-instagram text-[25px]"></i>
+              <FaInstagram className="text-xl" />
             </a>
-            <span className="text-zinc-700">همراه ما باشید!</span>
+            <span className="text-[#C5A253]">همراه ما باشید!</span>
           </div>
         </div>
 
-        <div className="mx-auto w-full grid grid-cols-1 gap-6 px-4 py-6 sm:grid-cols-2 sm:gap-8 sm:px-8 xl:grid-cols-3 md:px-16 lg:py-8">
+        {/* بخش درباره ما، صفحات و آدرس */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 px-6 py-10 border-t border-[#3A3A3A]">
           <div>
-            <h2 className="PeydaWeb text-justify text-zinc-800 text-lg sm:text-xl mb-4 sm:mb-5">
-              درباره ما
-            </h2>
-            <p className="IRANYekan text-justify text-zinc-700 text-sm sm:text-md">
+            <h2 className="text-[#C5A253] text-lg font-bold mb-4 PeydaWeb">درباره ما</h2>
+            <p className="text-[#BFBFBF] text-sm leading-relaxed text-justify IRANYekan">
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
-              چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد
-              نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته
-              حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد.
+              چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
             </p>
           </div>
 
           <div>
-            <h2 className="PeydaWeb text-justify text-zinc-800 text-lg sm:text-xl mb-4 sm:mb-5">
-              صفحات دیگر
-            </h2>
-            <div className="IRANYekan grid grid-flow-row gap-3 auto-rows-min">
-              {headerCategories.map((cat) => (
-                <Link
-                  key={cat.name}
-                  to={cat.url}
-                  className="flex flex-row items-center gap-2"
+            <h2 className="text-[#C5A253] text-lg font-bold mb-4 PeydaWeb">صفحات دیگر</h2>
+            <div className="IRANYekan flex flex-col gap-3">
+              {["صفحه ۱", "صفحه ۲", "درباره ما"].map((page, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="flex items-center gap-2 hover:text-[#C5A253] transition"
                 >
                   <svg
-                    className="w-4 h-4 text-gray-800 dark:text-gray-800 rtl:rotate-180"
-                    aria-hidden="true"
+                    className="w-4 h-4 text-[#C5A253]"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 6 10"
@@ -135,104 +129,72 @@ const Footer = () => {
                       d="m1 9 4-4-4-4"
                     />
                   </svg>
-                  <span className="text-zinc-700 text-sm sm:text-md">{cat.name}</span>
-                </Link>
+                  <span className="text-[#BFBFBF] text-sm">{page}</span>
+                </a>
               ))}
-
             </div>
           </div>
 
           <div>
-            <h2 className="PeydaWeb text-justify text-zinc-800 text-lg sm:text-xl mb-4 sm:mb-5">
-              آدرس
-            </h2>
-            <div className="IRANYekan w-full max-w-[400px] h-32 sm:h-40 md:h-48 bg-zinc-500 rounded-xl"></div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto flex flex-col md:flex-row-reverse items-center justify-between gap-6 p-4 md:p-8">
-        <div className="flex items-center gap-8">
-          <div className="flex flex-col items-center">
-            <a
-              referrerPolicy="origin"
-              target="_blank"
-              href="https://trustseal.enamad.ir/?id=655191&Code=0ohNiJWlBrimIVKNW4ULLJ3zPZ1F4XYf"
-            >
-              <img
-                referrerPolicy="origin"
-                src="https://trustseal.enamad.ir/logo.aspx?id=655191&Code=0ohNiJWlBrimIVKNW4ULLJ3zPZ1F4XYf"
-                alt=""
-                style={{ cursor: "pointer" }}
-              />
-            </a>
-            <span className="mt-1 text-xs text-gray-600">eNAMAD</span>
+            <h2 className="text-[#C5A253] text-lg font-bold mb-4 PeydaWeb">آدرس</h2>
+            <div className="w-full h-40 md:h-48 bg-[#3A3A3A] rounded-xl flex items-center justify-center text-[#BFBFBF] text-sm IRANYekan">
+              نقشه یا تصویر آدرس
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-start text-gray-800">
-          <h2 className="text-lg font-semibold mb-2">ارتباط با ما</h2>
-          <div className="flex items-center mb-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-gray-500 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M16 12H8m0 0l4 4m-4-4l4-4"
-              />
-            </svg>
-            <span className="text-sm">YourBusiness@gmail.com</span>
+        {/* بخش اینماد و تماس با ما */}
+        <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-6 p-4 md:p-8 border-t border-[#3A3A3A]">
+          <div className="flex items-center gap-8">
+            <div className="flex flex-col items-center">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                // href="https://trustseal.enamad.ir/?id=655191&Code=0ohNiJWlBrimIVKNW4ULLJ3zPZ1F4XYf"
+              >
+                <img
+                  // src="https://trustseal.enamad.ir/logo.aspx?id=655191&Code=0ohNiJWlBrimIVKNW4ULLJ3zPZ1F4XYf"
+                  alt="eNAMAD"
+                  style={{ cursor: "pointer" }}
+                />
+              </a>
+              <span className="mt-1 text-xs text-[#BFBFBF]">eNAMAD</span>
+            </div>
           </div>
-          <div className="flex items-center mb-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-gray-500 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 5a2 2 0 012-2h3a2 2 0 012 2v2h4V5a2 2 0 012-2h3a2 2 0 012 2v14a2 2 0 01-2 2h-3a2 2 0 01-2-2v-2H8v2a2 2 0 01-2 2H3a2 2 0 01-2-2V5z"
-              />
-            </svg>
-            <span className="text-sm">+98 912 560 7894</span>
-          </div>
-          <div className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-gray-500 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 5a2 2 0 012-2h3a2 2 0 012 2v2h4V5a2 2 0 012-2h3a2 2 0 012 2v14a2 2 0 01-2 2h-3a2 2 0 01-2-2v-2H8v2a2 2 0 01-2 2H3a2 2 0 01-2-2V5z"
-              />
-            </svg>
-            <span className="text-sm">+021 3260 4554</span>
+
+          <div className="flex flex-col items-start text-[#BFBFBF]">
+            <h2 className="text-lg font-semibold mb-2 text-[#C5A253] PeydaWeb">ارتباط با ما</h2>
+
+            <div className="flex items-center mb-1">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#BFBFBF] ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12H8m0 0l4 4m-4-4l4-4" />
+              </svg>
+              <span className="text-sm IRANYekan">YourBusiness@gmail.com</span>
+            </div>
+
+            <div className="flex items-center mb-1">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#BFBFBF] ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3a2 2 0 012 2v2h4V5a2 2 0 012-2h3a2 2 0 012 2v14a2 2 0 01-2 2h-3a2 2 0 01-2-2v-2H8v2a2 2 0 01-2 2H3a2 2 0 01-2-2V5z" />
+              </svg>
+              <span className="text-sm IRANYekan">+98 912 560 7894</span>
+            </div>
+
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#BFBFBF] ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3a2 2 0 012 2v2h4V5a2 2 0 012-2h3a2 2 0 012 2v14a2 2 0 01-2 2h-3a2 2 0 01-2-2v-2H8v2a2 2 0 01-2 2H3a2 2 0 01-2-2V5z" />
+              </svg>
+              <span className="text-sm IRANYekan">+021 3260 4554</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="px-4 py-6 text-center">
-        <small className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
-          &copy; {new Date().getFullYear()} ققنوس شاپ. تمامی حقوق محفوظ است.
-        </small>
+        <div className="text-center py-6 border-t border-[#3A3A3A]">
+          <small className="text-sm text-[#BFBFBF] IRANYekan">
+            © {new Date().getFullYear()} گراشل — تمامی حقوق محفوظ است.
+          </small>
+        </div>
       </div>
     </footer>
   );
 };
-
 export default Footer;

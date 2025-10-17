@@ -6,7 +6,7 @@ const loadCartFromLocalStorage = () => {
   return cartData ? JSON.parse(cartData) : { products: [], discount: null };
 };
 
-// مقدار اولیه از localStorage بارگذاری می‌شود
+
 const initialState = loadCartFromLocalStorage();
 
 const cartSlice = createSlice({
