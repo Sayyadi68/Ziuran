@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './redux/cartSlice';
-import userReducer, { fetchUser, logout } from "./redux/userSlice";
+import userReducer from "./redux/userSlice"; // فقط reducer
+import { fetchUser, logout, updateUser } from "./redux/userSlice"; // thunkها رو از slice import کن و re-export اگر می‌خوای
 
 // بارگذاری اطلاعات سبد خرید از localStorage
 const loadCartFromLocalStorage = () => {
@@ -31,4 +32,4 @@ store.subscribe(() => {
 });
 
 export default store;
-export { fetchUser, logout };
+export { fetchUser, logout, updateUser }; // حالا درست export می‌شه (از slice import شدن)

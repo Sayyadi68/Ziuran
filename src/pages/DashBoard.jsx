@@ -1,8 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'; // useEffect و useMemo اضافه شد
 import { Link, useLocation } from 'react-router-dom';
 import { FaTachometerAlt, FaShoppingCart, FaUser, FaHeart, FaSignOutAlt, FaCreditCard, FaMapMarkerAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import UserLocations from '../components/UserAddress';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchUser, logout, updateUser } from "../redux/userSlice"; // مستقیم از slice import کن (مسیر رو چک کن: src/redux/userSlice.js)
 
 // Simulated orders data with added fields for images and colors
 const ordersData = [
@@ -320,8 +322,6 @@ const ordersData = [
   //   progress: 2, // Completed stages
   // },
 ];
-
-
 
 // Utility functions
 const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -817,7 +817,7 @@ const BuyHistory = () => {
           </div>
         ) : (
           <div className="text-center text-white">هیچ سفارشی یافت نشد.</div>
-        ) 
+        )
       }
 
     </div>
@@ -826,25 +826,76 @@ const BuyHistory = () => {
 
 // Main Dashboard Component
 const Dashboard = () => {
+const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.user);
+  const loading = useSelector((state) => state.user.loading);
+  const fetchError = useSelector((state) => state.user.error);
+  const updateLoading = useSelector((state) => state.user.updateLoading);
+  const updateError = useSelector((state) => state.user.updateError);
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    displayName: "mahid",
-    email: "",
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    birth_date: '',
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('grushell_access_token');
+    console.log(token);
+    
+    if (!token && !userData) {
+      // navigate('/login');
+    } else if (!userData && !loading && !fetchError) {
+      dispatch(fetchUser({ useSession: false })); // توکن برای userdetail
+    }
+  }, [dispatch, userData, loading, fetchError, navigate]);
+
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        first_name: userData.first_name || '',
+        last_name: userData.last_name || '',
+        phone_number: userData.phone_number || '',
+        birth_date: userData.birth_date || '',
+      });
+    }
+  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("ارسال به API:", formData);
+// src/components/Dashboard.jsx
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const formattedFormData = {
+    first_name: formData.first_name || '',
+    last_name: formData.last_name || '',
+    phone_number: formData.phone_number || '',
+    birth_date: formData.birth_date || null, // خالی رو به null تبدیل کن
   };
+  console.log("FormData being sent:", formattedFormData);
+  dispatch(updateUser(formattedFormData)) // فقط formData رو بفرست
+    .unwrap()
+    .then(() => alert('تغییرات ثبت شد!'))
+    .catch((err) => alert('خطا: ' + (err.message || JSON.stringify(err))));
+};
 
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+   // هندل loading و error برای کل صفحه
+  if (loading) {
+    return <div className="text-white text-center">در حال بارگذاری اطلاعات کاربر...</div>;
+  }
+
+  if (fetchError) {
+    return <div className="text-red-500 text-center">خطا در بارگذاری کاربر: {fetchError} <button onClick={() => dispatch(fetchUser())} className="underline">تلاش دوباره</button></div>;
+  }
+
 
   return (
     <div className="flex flex-col lg:flex-row">
@@ -930,12 +981,8 @@ const Dashboard = () => {
           {isActive("/account/orders") ? <BuyHistory /> : null}
 
           {isActive('/account/userdetail') && (
-            <div className="max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
-
-              <div
-                className="mb-4 p-4 rounded-lg shadow bg-[#272727] text-white font-[Byekan]"
-              >
-
+            <div className="max-w-5xl mx-auto bg-[#272727] p-6 rounded-lg text-white font-[Byekan]">
+              <div className="mb-4 p-4 rounded-lg shadow bg-[#272727] text-white font-[Byekan]">
                 <h2 className="text-lg font-bold mb-4">اطلاعات حساب کاربری</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -943,8 +990,8 @@ const Dashboard = () => {
                       <label className="block text-sm font-medium">نام</label>
                       <input
                         type="text"
-                        name="firstName"
-                        value={formData.firstName}
+                        name="first_name"
+                        value={formData.first_name}
                         onChange={handleChange}
                         className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
                         placeholder="نام"
@@ -954,8 +1001,8 @@ const Dashboard = () => {
                       <label className="block text-sm font-medium">نام خانوادگی</label>
                       <input
                         type="text"
-                        name="lastName"
-                        value={formData.lastName}
+                        name="last_name"
+                        value={formData.last_name}
                         onChange={handleChange}
                         className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
                         placeholder="نام خانوادگی"
@@ -968,8 +1015,8 @@ const Dashboard = () => {
                       <label className="block text-sm font-medium">شماره تلفن</label>
                       <input
                         type="tel"
-                        name="phone"
-                        value={formData.phone}
+                        name="phone_number"
+                        value={formData.phone_number}
                         onChange={handleChange}
                         className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
                         placeholder="شماره تلفن"
@@ -979,14 +1026,13 @@ const Dashboard = () => {
                       <label className="block text-sm font-medium">تاریخ تولد</label>
                       <input
                         type="date"
-                        name="birthDate"
-                        value={formData.birthDate}
+                        name="birth_date"
+                        value={formData.birth_date}
                         onChange={handleChange}
                         className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
                       />
                     </div>
                   </div>
-
 
                   <div className="flex justify-center">
                     <button
@@ -997,11 +1043,9 @@ const Dashboard = () => {
                     </button>
                   </div>
                 </form>
-
               </div>
 
               <UserLocations />
-
             </div>
           )}
 
