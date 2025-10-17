@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: '../frontend_build', // خروجی build خارج از پوشه frontend
     emptyOutDir: true,
   },
-  base: '/static/', // مسیر درست برای Django
+  base: '/', // مسیر درست برای Django
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
