@@ -5,7 +5,9 @@ import axiosInstanceToken from '../api/axiosInstance';
 // ⚙️ Initial State
 // =======================
 const initialState = {
-  addresses: [], // ✅ اضافه شد
+  provinces: [],
+  cities: [],
+  addresses: [], // ✅ حتماً آرایه
   isModalOpen: false,
   formData: {
     province: '',
@@ -24,36 +26,26 @@ const initialState = {
   method: 'POST',
   addressId: null,
   errors: {},
-  cities: [],
 };
 
-// گرفتن همه‌ی آدرس‌ها
-export const fetchAddresses = createAsyncThunk(
-  'address/fetchAddresses',
+// =======================
+// 🚀 Async Thunks
+// =======================
+
+// 📍 گرفتن استان‌ها
+export const fetchProvinces = createAsyncThunk(
+  'address/fetchProvinces',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstanceToken.get('/address/');
+      const { data } = await axiosInstanceToken.get('/provinces/');
       return data;
     } catch (err) {
-      return rejectWithValue('خطا در دریافت لیست آدرس‌ها');
+      return rejectWithValue('خطا در دریافت استان‌ها');
     }
   }
 );
 
-// گرفتن آدرس از مختصات
-export const fetchAddress = createAsyncThunk(
-  'address/fetchAddress',
-  async ({ lat, lon }, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstanceToken.get(`/reverse-geocode/?lat=${lat}&lng=${lon}`);
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || 'خطا در گرفتن آدرس');
-    }
-  }
-);
-
-// گرفتن شهرهای هر استان
+// 📍 گرفتن شهرهای هر استان
 export const fetchCities = createAsyncThunk(
   'address/fetchCities',
   async (provinceId, { rejectWithValue }) => {
@@ -66,10 +58,44 @@ export const fetchCities = createAsyncThunk(
   }
 );
 
-// ایجاد یا ویرایش آدرس
+// 📍 گرفتن لیست آدرس‌های کاربر
+export const fetchAddresses = createAsyncThunk(
+  'address/fetchAddresses',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstanceToken.get('/address/');
+      // ✅ پشتیبانی از هر دو حالت (با pagination و بدون)
+      if (Array.isArray(data)) {
+        return data;
+      } else if (data.results && Array.isArray(data.results)) {
+        return data.results;
+      } else {
+        console.warn("Unexpected address data format:", data);
+        return [];
+      }
+    } catch (err) {
+      return rejectWithValue('خطا در دریافت لیست آدرس‌ها');
+    }
+  }
+);
+
+// 📍 گرفتن آدرس از مختصات نقشه
+export const fetchAddress = createAsyncThunk(
+  'address/fetchAddress',
+  async ({ lat, lon }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstanceToken.get(`/reverse-geocode/?lat=${lat}&lng=${lon}`);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || 'خطا در گرفتن آدرس از نقشه');
+    }
+  }
+);
+
+// 📍 ایجاد یا ویرایش آدرس
 export const submitAddress = createAsyncThunk(
   'address/submitAddress',
-  async ({ formData, method, addressId }, { rejectWithValue }) => {
+  async ({ formData, method, addressId }, { rejectWithValue, dispatch }) => {
     try {
       const url = method === 'POST' ? '/address/' : `/address/${addressId}/`;
       const { data } = await axiosInstanceToken({
@@ -77,14 +103,18 @@ export const submitAddress = createAsyncThunk(
         url,
         data: formData,
       });
+
+      // ✅ بعد از ثبت یا ویرایش، دوباره لیست آدرس‌ها را بگیر
+      await dispatch(fetchAddresses());
+
       return { method, data };
     } catch (err) {
-      return rejectWithValue('مشکل در ساخت یا بروزرسانی آدرس');
+      return rejectWithValue('مشکل در ثبت یا بروزرسانی آدرس');
     }
   }
 );
 
-// ویرایش آدرس
+// 📍 دریافت آدرس برای ویرایش
 export const editAddress = createAsyncThunk(
   'address/editAddress',
   async (addressId, { rejectWithValue, dispatch }) => {
@@ -94,13 +124,14 @@ export const editAddress = createAsyncThunk(
       dispatch(setCities(cities));
       return data;
     } catch (err) {
-      return rejectWithValue('خطا در دریافت آدرس');
+      return rejectWithValue('خطا در دریافت آدرس برای ویرایش');
     }
   }
 );
 
-
-
+// =======================
+// 🧩 Slice
+// =======================
 const addressSlice = createSlice({
   name: 'address',
   initialState,
@@ -136,15 +167,31 @@ const addressSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // 📍 دریافت لیست آدرس‌ها
+      // 📦 استان‌ها
+      .addCase(fetchProvinces.fulfilled, (state, action) => {
+        state.provinces = action.payload || [];
+      })
+      .addCase(fetchProvinces.rejected, (state, action) => {
+        state.errors.provinces = action.payload;
+      })
+
+      // 🏙️ شهرها
+      .addCase(fetchCities.fulfilled, (state, action) => {
+        state.cities = action.payload || [];
+      })
+      .addCase(fetchCities.rejected, (state, action) => {
+        state.errors.cities = action.payload;
+      })
+
+      // 📬 آدرس‌ها
       .addCase(fetchAddresses.fulfilled, (state, action) => {
-        state.addresses = action.payload;
+        state.addresses = action.payload || [];
       })
       .addCase(fetchAddresses.rejected, (state, action) => {
         state.errors.fetch = action.payload;
       })
 
-      // 📍 دریافت آدرس از مختصات
+      // 📍 آدرس از نقشه
       .addCase(fetchAddress.fulfilled, (state, action) => {
         state.formData.neighbourhood = action.payload.neighbourhood || '';
         state.formData.address = action.payload.formatted_address || 'آدرس پیدا نشد';
@@ -153,16 +200,8 @@ const addressSlice = createSlice({
         state.errors.address = action.payload;
       })
 
-      // 📍 دریافت شهرها
-      .addCase(fetchCities.fulfilled, (state, action) => {
-        state.cities = action.payload;
-      })
-      .addCase(fetchCities.rejected, (state, action) => {
-        state.errors.cities = action.payload;
-      })
-
-      // 📍 ارسال یا بروزرسانی آدرس
-      .addCase(submitAddress.fulfilled, (state, action) => {
+      // 💾 ثبت / ویرایش آدرس
+      .addCase(submitAddress.fulfilled, (state) => {
         state.isModalOpen = false;
         state.formData = initialState.formData;
         state.isReceiverSelf = true;
@@ -174,7 +213,7 @@ const addressSlice = createSlice({
         state.errors.submit = action.payload;
       })
 
-      // 📍 ویرایش آدرس
+      // ✏️ دریافت آدرس برای ویرایش
       .addCase(editAddress.fulfilled, (state, action) => {
         state.formData = {
           province: action.payload.province.id,

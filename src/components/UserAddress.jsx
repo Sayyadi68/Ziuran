@@ -1,48 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { useSelector, useDispatch } from 'react-redux';
-import AddressModal from './AddressModal';
-import { fetchAddresses, editAddress } from '../redux/addressSlice';
-
-
+import { useSelector, useDispatch } from "react-redux";
+import AddressModal from "./AddressModal";
+import {
+  fetchAddresses,
+  editAddress,
+  submitAddress,
+} from "../redux/addressSlice";
 
 const UserLocations = () => {
   const dispatch = useDispatch();
   const { addresses } = useSelector((state) => state.address);
 
-  React.useEffect(() => {
-    dispatch(fetchAddresses()); // ✅ حالا درست کار می‌کند
+  // 📦 گرفتن لیست آدرس‌ها هنگام بارگذاری صفحه
+  useEffect(() => {
+    dispatch(fetchAddresses());
   }, [dispatch]);
 
+  // ✏️ ویرایش آدرس
   const handleEdit = (id) => {
     dispatch(editAddress(id));
   };
 
-  // اگر هنوز آدرسی وجود ندارد، داده‌ی فرضی نمایش بده
-  const addressList = addresses.length > 0 ? addresses : [
-    {
-      id: 1,
-      name: "خانه",
-      phone: "۰۹۱۲۳۴۵۶۷۸۹",
-      address: "بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴",
-      postalCode: "12345",
-      naberhood: "تهران",
-      plate: "12",
-      mapImage: "https://via.placeholder.com/300x150?text=Map+1",
-      isDefault: true,
-    },
-    {
-      id: 2,
-      name: "دفتر کار",
-      phone: "۰۹۱۸۹۰۱۲۳۴۵",
-      address: "خیابان اصلی، کوچه ۵، پلاک ۱۰",
-      postalCode: "67890",
-      naberhood: "تهران",
-      plate: "34",
-      mapImage: "https://via.placeholder.com/300x150?text=Map+2",
-      isDefault: false,
-    },
-  ];
+  // 🗑️ حذف آدرس (در آینده می‌تونی API حذف بسازی)
+  const handleDelete = (id) => {
+    if (window.confirm("آیا از حذف این آدرس مطمئن هستید؟")) {
+      console.log("در اینجا می‌تونی API حذف را صدا بزنی", id);
+    }
+  };
+
+  // ✨ نمایش آدرس‌ها یا پیغام در صورت نبود
+  if (!addresses || addresses.length === 0) {
+    return (
+      <div className="bg-[#272727] rounded-xl p-8 text-center text-white font-[Byekan]">
+        <h2 className="text-lg font-bold mb-4">آدرس‌های من</h2>
+        <p className="text-gray-300 mb-6">شما هنوز هیچ آدرسی ثبت نکرده‌اید.</p>
+        <AddressModal />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#272727] rounded-xl p-8">
@@ -50,43 +46,66 @@ const UserLocations = () => {
         آدرس‌های من
       </h2>
 
-      {/* دکمه و مودال داخل AddressModal */}
-      <AddressModal provinces={[]} />
-
-      {addressList.map((addr) => (
+      {addresses.map((addr) => (
         <div
           key={addr.id}
-          className="mb-4 p-4 rounded-lg shadow bg-[#272727] text-white font-[Byekan] flex flex-col md:flex-row items-start md:items-center gap-4"
+          className="mb-4 p-4 rounded-lg shadow bg-[#2e2e2e] text-white font-[Byekan] flex flex-col md:flex-row items-start md:items-center gap-4 border border-gray-700"
         >
+          {/* نقشه یا تصویر */}
           <img
-            src={addr.mapImage}
+            src={
+              addr.latitude && addr.longitude
+                ? `https://api.neshan.org/v1/static?key=service.3605b54b29cb422683404bdb9e64f178&type=standard-day&center=${Number(
+                  addr.latitude
+                ).toFixed(6)},${Number(addr.longitude).toFixed(
+                  6
+                )}&zoom=17&width=320&height=180&marker=${Number(
+                  addr.latitude
+                ).toFixed(6)},${Number(addr.longitude).toFixed(6)}`
+                : "https://via.placeholder.com/320x180?text=بدون+مختصات"
+            }
+
             alt="نقشه"
-            className="w-full md:w-40 h-40 md:h-20 object-cover rounded"
+            className="w-full md:w-60 h-40 md:h-40 object-cover rounded"
           />
 
-          <div className="flex-1 flex flex-col gap-1">
+          {/* اطلاعات آدرس */}
+          <div className="flex-1 flex flex-col gap-1 text-right">
             <div className="text-yellow-500 text-sm font-semibold">
-              آدرس {addr.name}
+              آدرس {addr.name || "بدون عنوان"}
             </div>
             <p className="text-sm">{addr.address}</p>
-            <p className="text-sm">کد پستی: {addr.postalCode}</p>
-            <p className="text-sm">پلاک: {addr.plate}</p>
-            <p className="text-sm">تلفن: {addr.phone}</p>
+            <p className="text-sm">کد پستی: {addr.postal_code || addr.postalCode}</p>
+            <p className="text-sm">پلاک: {addr.notes || addr.plate}</p>
+            <p className="text-sm">
+              تلفن: {addr.receiver_phone || addr.phone || "—"}
+            </p>
           </div>
 
+          {/* دکمه‌ها */}
           <div className="flex gap-2 mt-2 md:mt-0">
             <button
               onClick={() => handleEdit(addr.id)}
               className="text-white hover:text-gray-300 p-2 bg-gray-700 rounded-md"
+              title="ویرایش آدرس"
             >
               <FaEdit />
             </button>
-            <button className="text-white hover:text-gray-300 p-2 bg-gray-700 rounded-md">
+            <button
+              onClick={() => handleDelete(addr.id)}
+              className="text-white hover:text-gray-300 p-2 bg-gray-700 rounded-md"
+              title="حذف آدرس"
+            >
               <FaTrash />
             </button>
           </div>
         </div>
       ))}
+
+      {/* دکمه افزودن آدرس جدید */}
+      <div className="flex justify-center mt-6">
+        <AddressModal />
+      </div>
     </div>
   );
 };

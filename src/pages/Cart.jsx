@@ -207,7 +207,7 @@ const Cart = () => {
                     <BsCartX className="text-[100px] text-gray-300" />
                     <h3 className="text-xl font-bold text-blue-900">سبد خرید شما در حال حاضر خالی است.</h3>
                     <h3 className="text-md font-medium text-gray-500">لطفا ابتدا محصولاتی به سبد خرید خود اضافه کنید</h3>
-                    <Link to="/products" className="bg-[#FF4D6D] text-white p-3 rounded-lg">بازگشت به فروشگاه</Link>
+                    <a href="/" className="bg-[#FF4D6D] text-white p-3 rounded-lg">بازگشت به فروشگاه</a>
                 </div>
             )}
         </div>

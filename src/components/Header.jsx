@@ -47,7 +47,7 @@ const PcHeader = () => {
             </span>
           </button>
 
-          <a href="/app/basket" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
+          <a href="/cart" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
             <FaShoppingBag className="text-xl" />
           </a>
 
