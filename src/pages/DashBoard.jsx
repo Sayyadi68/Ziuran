@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react'; // useEffect و useMemo اضافه شد
+import React, { useState, useEffect, useMemo } from 'react'; 
 import { Link, useLocation } from 'react-router-dom';
 import { FaTachometerAlt, FaShoppingCart, FaUser, FaHeart, FaSignOutAlt, FaCreditCard, FaMapMarkerAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import UserLocations from '../components/UserAddress';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchUser, logout, updateUser } from "../redux/userSlice"; // مستقیم از slice import کن (مسیر رو چک کن: src/redux/userSlice.js)
+import { fetchUser, logout, updateUser } from "../redux/userSlice"; 
+
+
 
 // Simulated orders data with added fields for images and colors
 const ordersData = [
