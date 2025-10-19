@@ -877,7 +877,6 @@ const handleSubmit = (e) => {
   const formattedFormData = {
     first_name: formData.first_name || '',
     last_name: formData.last_name || '',
-    phone_number: formData.phone_number || '',
     birth_date: formData.birth_date || null, // خالی رو به null تبدیل کن
   };
   console.log("FormData being sent:", formattedFormData);
@@ -889,15 +888,6 @@ const handleSubmit = (e) => {
 
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
-   // هندل loading و error برای کل صفحه
-  if (loading) {
-    return <div className="text-white text-center">در حال بارگذاری اطلاعات کاربر...</div>;
-  }
-
-  if (fetchError) {
-    return <div className="text-red-500 text-center">خطا در بارگذاری کاربر: {fetchError} <button onClick={() => dispatch(fetchUser())} className="underline">تلاش دوباره</button></div>;
-  }
-
 
   return (
     <div className="flex flex-col lg:flex-row">
@@ -1019,7 +1009,7 @@ const handleSubmit = (e) => {
                         type="tel"
                         name="phone_number"
                         value={formData.phone_number}
-                        onChange={handleChange}
+                         
                         className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
                         placeholder="شماره تلفن"
                       />

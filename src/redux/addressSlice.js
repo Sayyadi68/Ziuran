@@ -129,6 +129,31 @@ export const editAddress = createAsyncThunk(
   }
 );
 
+
+
+// ✅ انتخاب آدرس فعال با Radio Button (معادل کد JS شما)
+export const setActiveAddress = createAsyncThunk(
+  'address/setActiveAddress',
+  async (addressId, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axiosInstanceToken.post(`/address/${addressId}/set-active/`);
+      dispatch(fetchAddresses()); // رفرش لیست آدرس‌ها
+      // پیام موفقیت - اگه از Tailwind Message استفاده می‌کنی
+      if (typeof window !== 'undefined' && window.showTailwindMessage) {
+        window.showTailwindMessage('آدرس شما تغییر کرد', 'success');
+      }
+      if (window.location.pathname === '/basket/') {
+        window.location.reload();
+      }
+      return data;
+    } catch (err) {
+      console.error('Error selecting address:', err);
+      return rejectWithValue('خطا در تغییر آدرس فعال');
+    }
+  }
+);
+
+
 // =======================
 // 🧩 Slice
 // =======================
