@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';  
 import { FaUser, FaShoppingBag, FaInstagram, FaSearch } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const PcHeader = () => {
@@ -47,9 +47,9 @@ const PcHeader = () => {
             </span>
           </button>
 
-          <a href="/cart" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
+          <Link to="/cart" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
             <FaShoppingBag className="text-xl" />
-          </a>
+          </Link>
 
           <a href="#" aria-label="Instagram" className="text-[#C5A253] hover:text-[#D4AF37] transition-colors duration-300">
             <FaInstagram className="text-2xl" />
