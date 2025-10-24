@@ -121,44 +121,33 @@ const Cart = ({ product }) => {
         Number(price.toString().replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[^\d]/g, ""));
     const formatPrice = (num) => num.toLocaleString("fa-IR").replace(/٬/g, ",");
 
-    const subtotal = parsePrice(total_price);
-    const totalDiscount = discount ? parsePrice(discount.amount || 0) : 0;
+
+    const totalOriginalPrice = items.reduce((total, item) => {
+        const originalPrice = item.product.discount_percentage > 0
+            ? parsePrice(item.product.price) / (1 - item.product.discount_percentage / 100)
+            : parsePrice(item.product.price);
+        return total + originalPrice * item.quantity;
+    }, 0);
+
+    const totalDiscountedPrice = items.reduce((total, item) => {
+        return total + parsePrice(item.product.price) * item.quantity;
+    }, 0);
+
+    
+    const totalDiscountPercentage = totalOriginalPrice > 0
+        ? ((totalOriginalPrice - totalDiscountedPrice) / totalOriginalPrice) * 100
+        : 0;
+
+    const subtotal = totalDiscountedPrice;
+    const totalDiscount = totalOriginalPrice - totalDiscountedPrice;
     const shippingCost = 25000;
-    const totalPayable = subtotal - totalDiscount + shippingCost;
+    const totalPayable = subtotal - (discount ? parsePrice(discount.amount || 0) : 0) + shippingCost;
 
     console.log("Cart state:", { items, cartUuid, total_price, discount, status, error });
 
-    if (!showCart && product) {
-        return (
-            <div className="p-4 bg-white rounded-lg shadow max-w-2xl mx-auto">
-                <h2 className="text-xl font-bold text-blue-900">{product.name}</h2>
-                <img src={product.image} alt={product.name} className="w-32 h-32 rounded my-2 mx-auto" />
-                <p className="text-gray-700 text-lg">قیمت: {formatPrice(parsePrice(product.price))} تومان</p>
-                <div className="flex items-center gap-2 my-4 justify-center">
-                    <label className="text-gray-700 font-medium">تعداد:</label>
-                    <input
-                        type="number"
-                        min="1"
-                        value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
-                        className="border p-2 w-20 rounded text-center"
-                    />
-                </div>
-                <button
-                    onClick={handleAddToCart}
-                    disabled={status === 'loading'}
-                    className="w-full bg-[#BC264A] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#ff3359] transition text-lg"
-                >
-                    {status === 'loading' ? 'در حال افزودن...' : 'افزودن به سبد خرید و مشاهده'}
-                </button>
-                {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
-            </div>
-        );
-    }
-
     return (
         <div className="flex flex-col lg:flex-row justify-center gap-6 w-full p-4 md:p-8 md:max-w-[1490px] mx-auto">
-            { items.length > 0 ? (
+            {items.length > 0 ? (
                 <>
                     <div className="w-full lg:w-2/3 flex flex-col gap-6">
                         <UserLocations />
@@ -183,7 +172,20 @@ const Cart = ({ product }) => {
                                         </div>
                                         <div className="flex justify-between text-white">
                                             <span>قیمت:</span>
-                                            <span>{formatPrice(parsePrice(item.product.price))} تومان</span>
+                                            <span>
+                                                {item.product.discount_percentage > 0 ? (
+                                                    <div className="flex flex-col text-end gap-1">
+                                                        <span className="text-gray-400 line-through">
+                                                            {formatPrice(parsePrice(item.product.price) / (1 - item.product.discount_percentage / 100))} تومان
+                                                        </span>
+                                                        <span className="text-[#C5A253]">
+                                                            {formatPrice(parsePrice(item.product.discount_percentage))} %    |     {formatPrice(parsePrice(item.product.price))} تومان
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <span>{formatPrice(parsePrice(item.product.price))} تومان</span>
+                                                )}
+                                            </span>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-white">تعداد:</span>
@@ -217,6 +219,7 @@ const Cart = ({ product }) => {
                                     <thead>
                                         <tr className="bg-[#353535] text-white border-b">
                                             <th className="py-2 px-4">محصول</th>
+                                            <th className="py-2 px-4">درصد تخفیف</th>
                                             <th className="py-2 px-4">قیمت</th>
                                             <th className="py-2 px-4">تعداد</th>
                                             <th className="py-2 px-4">قیمت کل</th>
@@ -229,7 +232,29 @@ const Cart = ({ product }) => {
                                                     <img src={item.product.image} alt={item.product.name} className="w-12 h-12 rounded" />
                                                     <span className="truncate text-[#C5A253]">{item.product.name}</span>
                                                 </td>
-                                                <td className="py-3 px-4 text-white">{formatPrice(parsePrice(item.product.price))} تومان</td>
+                                                <td className="py-3 px-4 text-white">
+                                                    {item.product.discount_percentage > 0 ? (
+                                                        <span className="text-[#C5A253]">
+                                                            {formatPrice(parsePrice(item.product.discount_percentage))} %
+                                                        </span>
+                                                    ) : (
+                                                        <span>-</span>
+                                                    )}
+                                                </td>
+                                                <td className="py-3 px-4 text-white">
+                                                    {item.product.discount_percentage > 0 ? (
+                                                        <div className="flex flex-col gap-1">
+                                                            <span className="text-gray-400 line-through">
+                                                                {formatPrice(parsePrice(item.product.price) / (1 - item.product.discount_percentage / 100))} تومان
+                                                            </span>
+                                                            <span className="text-[#C5A253]">
+                                                                {formatPrice(parsePrice(item.product.price))} تومان
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <span>{formatPrice(parsePrice(item.product.price))} تومان</span>
+                                                    )}
+                                                </td>
                                                 <td className="py-3 px-4">
                                                     <div className="flex items-center justify-center gap-2">
                                                         <button
@@ -275,7 +300,7 @@ const Cart = ({ product }) => {
                                 <div className="flex items-center gap-2">
                                     {totalDiscount > 0 && (
                                         <span className="bg-[#C5A253] text-black text-xs font-bold px-2 py-1 rounded-full">
-                                            {Math.round((totalDiscount / subtotal) * 100)}٪
+                                            {Math.round(totalDiscountPercentage)}٪
                                         </span>
                                     )}
                                     <span className="text-[#C5A253]">{formatPrice(totalDiscount)} تومان</span>
