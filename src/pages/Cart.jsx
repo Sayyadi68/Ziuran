@@ -133,7 +133,7 @@ const Cart = ({ product }) => {
         return total + parsePrice(item.product.price) * item.quantity;
     }, 0);
 
-    
+
     const totalDiscountPercentage = totalOriginalPrice > 0
         ? ((totalOriginalPrice - totalDiscountedPrice) / totalOriginalPrice) * 100
         : 0;
@@ -310,10 +310,62 @@ const Cart = ({ product }) => {
                                 <span className="text-gray-300">هزینه ارسال:</span>
                                 <span className="text-gray-200">{formatPrice(shippingCost)} تومان</span>
                             </div>
+
                             <div className="flex justify-between border-t border-gray-700 pt-3 font-semibold text-lg">
                                 <span>مبلغ قابل پرداخت:</span>
                                 <span>{formatPrice(totalPayable)} تومان</span>
                             </div>
+
+
+                            <div class="flex">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        class="appearance-none w-5 h-5 border-2 rounded-md cursor-pointer transition-all duration-200 
+              checked:bg-[#7B2C3F] checked:border-[#7B2C3F] relative
+              before:content-[''] before:absolute before:left-1 
+              before:w-2 before:h-3 before:border-r-2 before:border-b-2 before:border-white 
+              before:rotate-45 before:origin-center before:scale-0 
+              checked:before:scale-100 before:transition-transform before:duration-200"
+                                    />
+                                </div>
+                                <div class="ms-2 text-sm">
+                                    <label class="font-medium text-gray-900 dark:text-gray-300">پرداخت با زرینپال</label>
+                                    <p class="text-xs font-normal text-gray-500 dark:text-gray-300">امنیت بالا و سریع</p>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        class="appearance-none w-5 h-5 border-2 rounded-md cursor-pointer transition-all duration-200 
+              checked:bg-[#7B2C3F] checked:border-[#7B2C3F] relative
+              before:content-[''] before:absolute before:left-1 
+              before:w-2 before:h-3 before:border-r-2 before:border-b-2 before:border-white 
+              before:rotate-45 before:origin-center before:scale-0 
+              checked:before:scale-100 before:transition-transform before:duration-200"
+                                    />
+                                </div>
+                                <div class="ms-2 text-sm">
+                                    <label class="font-medium text-gray-900 dark:text-gray-300">پرداخت با اسنپ‌پی</label>
+                                    <p class="text-xs font-normal text-gray-500 dark:text-gray-300">امنیت بالا ، سریع ، خرید قسطی</p>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="flex items-center h-5">
+                                    <input type="checkbox" checked={true} className="appearance-none w-5 h-5 border-2 rounded-md cursor-pointer transition-all duration-200 checked:bg-[#7B2C3F] checked:border-[#7B2C3F] relative before:content-[''] before:absolute before:left-1 before:w-2 before:h-3 before:border-r-2 before:border-b-2 before:border-white before:rotate-45 before:origin-center before:scale-0 checked:before:scale-100 before:transition-transform before:duration-200" />
+                                </div>
+                                <div class="ms-2 text-sm">
+                                    <label for="helper-checkbox" class="font-medium text-gray-900 dark:text-gray-300">ارسال با اسنپ باکس</label>
+                                    <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500 dark:text-gray-300">تحویل سریع و فوری</p>
+                                </div>
+                            </div>
+
+
                             <div className="flex flex-col md:flex-row gap-2 mt-4">
                                 <input
                                     type="text"
@@ -330,6 +382,8 @@ const Cart = ({ product }) => {
                                     اعمال
                                 </button>
                             </div>
+
+
                             <button
                                 className="bg-[#BC264A] flex justify-center items-center gap-3 px-5 py-3 rounded-lg font-semibold hover:bg-[#ff3359] transition mt-4 w-full"
                                 onClick={handlePayment}
@@ -338,6 +392,7 @@ const Cart = ({ product }) => {
                                 <FaCreditCard className="text-white" />
                                 پرداخت آنلاین
                             </button>
+                            
                         </div>
                     </div>
                 </>

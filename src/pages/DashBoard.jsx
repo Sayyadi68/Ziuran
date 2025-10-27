@@ -1,450 +1,107 @@
-import React, { useState, useEffect, useMemo } from 'react'; 
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaTachometerAlt, FaShoppingCart, FaUser, FaHeart, FaSignOutAlt, FaCreditCard, FaMapMarkerAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import UserLocations from '../components/UserAddress';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchUser, logout, updateUser } from "../redux/userSlice"; 
-
-
-
-// Simulated orders data with added fields for images and colors
-const ordersData = [
-  // {
-  //   id: 1,
-  //   created_at: '1404/06/21 22:13',
-  //   reference_id: '1267148788',
-  //   delivery_status: "تحویل شده",
-  //   delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
-  //   address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-  //   receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-  //   items: [
-  //     {
-  //       id: 1,
-  //       product_name: 'چیپس نمکی مزمز',
-  //       product_weight: '۶۰ گرم',
-  //       unit_price: 1000,
-  //       original_unit_price: 3553543,
-  //       discount_percentage: 23,
-  //       quantity: 1,
-  //       total_price: 1000,
-  //       product_image: 'https://example.com/chips1.jpg',
-  //     },
-  //     {
-  //       id: 2,
-  //       product_name: 'چیپس نمکی مزمز',
-  //       product_weight: '۶۰ گرم',
-  //       unit_price: 1000,
-  //       original_unit_price: 3553543,
-  //       discount_percentage: 23,
-  //       quantity: 1,
-  //       total_price: 1000,
-  //       product_image: 'https://example.com/chips2.jpg',
-  //     },
-  //     {
-  //       id: 3,
-  //       product_name: 'چیپس نمکی مزمز',
-  //       product_weight: '۶۰ گرم',
-  //       unit_price: 1000,
-  //       original_unit_price: 3553543,
-  //       discount_percentage: 23,
-  //       quantity: 1,
-  //       total_price: 1000,
-  //       product_image: 'https://example.com/chips3.jpg',
-  //     },
-  //   ],
-  //   shipping_cost: 20000,
-  //   original_items_total: 591000,
-  //   total_discount_amount: 28000,
-  //   total_discount_percentage: 5.5,
-  //   amount_paid: 583000,
-  //   payment_info: {
-  //     card_holder: 'سید علی موسوی مجاب',
-  //     card_number: '6104-14**-****-3315',
-  //     date_time: '1404/06/21 - 23:12:56',
-  //     tracking_number: '588371234',
-  //     reference_id: '1267148788',
-  //   },
-  //   refund_info: null,
-  //   status: 'current',
-  //   color: 'green',
-  //   progress: 2, // Completed stages
-  // },
-  {
-    id: 2,
-    created_at: '1404/06/21 22:13',
-    reference_id: '1267148788',
-    delivery_status: 'تحویل شده',
-    delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
-    address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-    receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-    items: [
-      {
-        id: 1,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips1.jpg',
-      },
-      {
-        id: 2,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips2.jpg',
-      },
-      {
-        id: 3,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips3.jpg',
-      },
-    ],
-    shipping_cost: 20000,
-    original_items_total: 591000,
-    total_discount_amount: 28000,
-    total_discount_percentage: 5.5,
-    amount_paid: 583000,
-    payment_info: {
-      card_holder: 'سید علی موسوی مجاب',
-      card_number: '6104-14**-****-3315',
-      date_time: '1404/06/21 - 23:12:56',
-      tracking_number: '588371234',
-      reference_id: '1267148788',
-    },
-    refund_info: null,
-    status: 'delivered',
-    color: 'green',
-    progress: 4,
-    return_window: 'از ساعت 22:33 تا 23:12 این فاکتور قابلیت مرجوع کردن دارد.',
-  },
-  {
-    id: 3,
-    created_at: '1404/06/21 22:13',
-    reference_id: '1267148788',
-    delivery_status: 'مرجوع شده، تا ساعت ۲۲:۳۰ پیک بسته را از شما تحویل میگیرد.',
-    delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
-    description: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز.',
-    address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-    receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-    items: [
-      {
-        id: 1,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips1.jpg',
-      },
-      {
-        id: 2,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips2.jpg',
-      },
-      {
-        id: 3,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips3.jpg',
-      },
-    ],
-    shipping_cost: 20000,
-    original_items_total: 591000,
-    total_discount_amount: 28000,
-    total_discount_percentage: 5.5,
-    amount_paid: 583000,
-    payment_info: {
-      card_holder: 'سید علی موسوی مجاب',
-      card_number: '6104-14**-****-3315',
-      date_time: '1404/06/21 - 23:12:56',
-      tracking_number: '588371234',
-      reference_id: '1267148788',
-    },
-    refund_info: {
-      account_holder: 'سید علی موسوی مجاب',
-      status: 'تایید شده',
-      date_time: '1404/06/21 - 23:12:56',
-      wallet_link: 'مشاهده کیف پول',
-    },
-    status: 'returned',
-    color: 'orange',
-    progress: 4,
-  },
-  {
-    id: 4,
-    created_at: '1404/06/21 22:13',
-    reference_id: '1267148788',
-    delivery_status: 'لغو به دلیل تصادف پیک.',
-    delivery_time: '-',
-    description: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز.',
-    address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-    receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-    items: [
-      {
-        id: 1,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips1.jpg',
-      },
-      {
-        id: 2,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips2.jpg',
-      },
-      {
-        id: 3,
-        product_name: 'چیپس نمکی مزمز',
-        product_weight: '۶۰ گرم',
-        unit_price: 1000,
-        original_unit_price: 3553543,
-        discount_percentage: 23,
-        quantity: 1,
-        total_price: 1000,
-        product_image: 'https://example.com/chips3.jpg',
-      },
-    ],
-    shipping_cost: 20000,
-    original_items_total: 591000,
-    total_discount_amount: 28000,
-    total_discount_percentage: 5.5,
-    amount_paid: 583000,
-    payment_info: {
-      card_holder: 'سید علی موسوی مجاب',
-      card_number: '6104-14**-****-3315',
-      date_time: '1404/06/21 - 23:12:56',
-      tracking_number: '588371234',
-      reference_id: '1267148788',
-    },
-    refund_info: {
-      account_holder: 'سید علی موسوی مجاب',
-      status: 'تایید شده',
-      date_time: '1404/06/21 - 23:12:56',
-      wallet_link: 'مشاهده کیف پول',
-    },
-    status: 'canceled',
-    color: 'red',
-    progress: 4,
-  },
-  // {
-  //   id: 5,
-  //   created_at: '1404/06/21 22:13',
-  //   reference_id: '1267148788',
-  //   delivery_status: 'در حال ارسال',
-  //   delivery_time: '۱۴۰۴/۰۶/۲۱- ۲۲:۱۲',
-  //   address: 'بل دانشگاه، پل نواب، ب. اندیشه، م. اندیشه 13، مجتمع مطبوعات، بلوک ب، واحد ۲۴',
-  //   receiver: 'سید علی موسوی مجاب | ۰۹۱۲۱۴۰۰۷۱۲',
-  //   items: [
-  //     {
-  //       id: 1,
-  //       product_name: 'چیپس نمکی مزمز',
-  //       product_weight: '۶۰ گرم',
-  //       unit_price: 1000,
-  //       original_unit_price: 3553543,
-  //       discount_percentage: 23,
-  //       quantity: 1,
-  //       total_price: 1000,
-  //       product_image: 'https://example.com/chips1.jpg',
-  //     },
-  //     {
-  //       id: 2,
-  //       product_name: 'چیپس نمکی مزمز',
-  //       product_weight: '۶۰ گرم',
-  //       unit_price: 1000,
-  //       original_unit_price: 3553543,
-  //       discount_percentage: 23,
-  //       quantity: 1,
-  //       total_price: 1000,
-  //       product_image: 'https://example.com/chips2.jpg',
-  //     },
-  //     {
-  //       id: 3,
-  //       product_name: 'چیپس نمکی مزمز',
-  //       product_weight: '۶۰ گرم',
-  //       unit_price: 1000,
-  //       original_unit_price: 3553543,
-  //       discount_percentage: 23,
-  //       quantity: 1,
-  //       total_price: 1000,
-  //       product_image: 'https://example.com/chips3.jpg',
-  //     },
-  //   ],
-  //   shipping_cost: 20000,
-  //   original_items_total: 591000,
-  //   total_discount_amount: 28000,
-  //   total_discount_percentage: 5.5,
-  //   amount_paid: 583000,
-  //   payment_info: {
-  //     card_holder: 'سید علی موسوی مجاب',
-  //     card_number: '6104-14**-****-3315',
-  //     date_time: '1404/06/21 - 23:12:56',
-  //     tracking_number: '588371234',
-  //     reference_id: '1267148788',
-  //   },
-  //   refund_info: null,
-  //   status: 'current',
-  //   color: 'green',
-  //   progress: 2, // Completed stages
-  // },
-];
-
+import { fetchUser, logout, updateUser } from "../redux/userSlice";
+import axios from 'axios'
+import jalaali from 'jalaali-js';
 // Utility functions
-const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-const formatJalaliVerbose = (date) => 'پنج‌شنبه ۲۱ شهریور ماه';
+const formatNumber = (num) =>
+  num != null ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
+const formatJalaliVerbose = (jalaliString) => {
+  // فرض می‌کنیم ورودی مثل "1404/08/05 12:45"
+  const [datePart] = jalaliString.split(' ');
+  const [jy, jm, jd] = datePart.split('/').map(Number);
 
-// Get color classes based on order color
-const getColorClass = (color, type = 'bg') => {
-  if (color === 'green') return `${type}-green-500`;
-  if (color === 'orange') return `${type}-orange-500`;
-  if (color === 'red') return `${type}-red-500`;
-  return `${type}-gray-500`;
+  const { gy, gm, gd } = jalaali.toGregorian(jy, jm, jd);
+  const date = new Date(gy, gm - 1, gd); // ساخت تاریخ میلادی برای محاسبه روز هفته
+
+  const weekdays = ["یک‌شنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
+  const months = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+
+  const dayOfWeek = weekdays[date.getDay()];
+  const day = jd;
+  const month = months[jm - 1];
+
+  return `${dayOfWeek} ${day} ${month}`;
 };
-
-// Modal Component
-const Modal = ({ isOpen, onClose, title, children, onSubmit }) => {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96 shadow-lg">
-        <h2 className="text-xl font-bold mb-4 text-gray-800 font-[Byekan]">{title}</h2>
-        {children}
-        <div className="flex justify-end mt-6 space-x-3 rtl:space-x-reverse">
-          <button
-            onClick={onClose}
-            className="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg font-[Byekan] hover:bg-gray-300 transition"
-          >
-            بستن
-          </button>
-          {onSubmit && (
-            <button
-              onClick={onSubmit}
-              className="bg-blue-600 text-white px-5 py-2 rounded-lg font-[Byekan] hover:bg-blue-700 transition"
-            >
-              تأیید و ثبت
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Order Item Component
 const OrderItem = ({ item, index }) => (
   <tr className="border-b border-gray-200">
     <td className="p-3 text-center text-white font-[Byekan]">{index + 1}.</td>
     <td className="p-3 text-white font-[Byekan]">
       <div>{item.product_name}</div>
-      {item.product_weight && <div className="text-sm text-gray-500">{item.product_weight}</div>}
+      {item.product_weight && (
+        <div className="text-sm text-gray-500">{item.product_weight}</div>
+      )}
     </td>
-    <td className="p-3 text-center text-white font-[Byekan]">{formatNumber(item.quantity)} عدد</td>
-    <td className="p-3 text-center text-white font-[Byekan]">{formatNumber(item.original_unit_price)} تومان</td>
+    <td className="p-3 text-center text-white font-[Byekan]">
+      {formatNumber(item.quantity)} عدد
+    </td>
+    <td className="p-3 text-center text-white font-[Byekan]">
+      {formatNumber(item.original_unit_price)} تومان
+    </td>
     <td className="p-3 text-center text-white font-[Byekan]">
       {item.discount_percentage ? (
-        <span className="text-orange-500">{item.discount_percentage}% {formatNumber(item.original_unit_price - item.unit_price)} تومان</span>
-      ) : '-'}
+        <span className="text-orange-500">
+          {item.discount_percentage}%{" "}
+          {formatNumber(item.original_unit_price - item.unit_price)} تومان
+        </span>
+      ) : (
+        "-"
+      )}
     </td>
-    <td className="p-3 text-center text-white font-[Byekan]">{formatNumber(item.total_price)} تومان</td>
+    <td className="p-3 text-center text-white font-[Byekan]">
+      {formatNumber(item.total_price)} تومان
+    </td>
   </tr>
 );
 
 
-const getStageColor = (status) => {
-  if (status.includes("لغو")) {
-    return "#EF4444"; // قرمز برای لغو
-  } else if (status.includes("مرجوع")) {
-    return "#F59E0B"; // نارنجی برای مرجوع
-  }
-  switch (status) {
-    case "ثبت شده":
-      return "#3B82F6";
-    case "در حال آماده‌سازی":
-      return "#3B82F6";
-    case "در حال ارسال":
-      return "#22C55E"; // سبز
-    case "تحویل شده":
-      return "#16A34A"; // سبز پررنگ
-    default:
-      return "#A3A3A3";
-  }
+const statusMap = {
+  pending: { label: "در انتظار جمع‌آوری", color: "#16A34A", progress: 1 },
+  packed: { label: "بسته‌بندی شده", color: "#16A34A", progress: 2 },
+  shipped: { label: "ارسال شده", color: "#16A34A", progress: 3 },
+  delivered: { label: "تحویل شد", color: "#16A34A", progress: 4 },
+  cancelled: { label: "لغو شده", color: "#EF4444", progress: 4 },
+  returned: { label: "مرجوع شده", color: "#F59E0B", progress: 4 },
 };
-const getProgressFromStatus = (deliveryStatus) => {
-  if (deliveryStatus.includes("لغو") || deliveryStatus.includes("مرجوع")) {
-    return 4;
-  }
-  switch (deliveryStatus) {
-    case "ثبت شده":
-      return 1;
-    case "در حال آماده‌سازی":
-      return 2;
-    case "در حال ارسال":
-      return 3;
-    case "تحویل شده":
-      return 4;
-    default:
-      return 1;
-  }
+
+const getStageColor = (status) => {
+  return statusMap[status]?.color || "#A3A3A3";
+};
+
+const getProgressFromStatus = (status) => {
+  return statusMap[status]?.progress || 1;
+};
+
+const getDeliveryLabel = (status) => {
+  return statusMap[status]?.label || status;
 };
 
 const ProgressBar = ({ order }) => {
-  const stages = ["تایید شده", "آماده‌سازی", "تحویل به پیک", "تحویل"]; // ترتیب طبیعی، با CSS معکوس میشه
+  const statusKeys = ["pending", "packed", "shipped", "delivered"];
+  const stages = statusKeys.map((key) => statusMap[key].label);
 
-  if (!order || !order.delivery_status) {
+  if (!order || !order.delivery_status)
     return <div className="text-red-500 font-[Byekan] text-sm">خطا: اطلاعات سفارش معتبر نیست.</div>;
-  }
 
   const progress = getProgressFromStatus(order.delivery_status);
   const color = getStageColor(order.delivery_status);
-  const isCanceled = order.delivery_status.includes("لغو") || order.delivery_status.includes("مرجوع");
+  const isCanceled =
+    order.status === "failed" || order.delivery_status === "returned" || order.delivery_status === "cancelled";
 
   const stageStyles = useMemo(() => {
     return stages.map((_, index) => {
       const isCompleted = index < progress - 1;
       const isCurrent = index === progress - 1;
-
       let bgColor = "white";
       let borderColor = "#D1D5DB";
       let icon = null;
 
       if (isCanceled) {
-        bgColor = getStageColor(order.delivery_status); // رنگ بر اساس نوع (قرمز یا نارنجی)
+        bgColor = getStageColor(order.delivery_status);
         borderColor = getStageColor(order.delivery_status);
         icon = <span className="text-white font-bold">X</span>;
       } else if (isCompleted) {
@@ -462,17 +119,11 @@ const ProgressBar = ({ order }) => {
   }, [progress, color, isCanceled, order.delivery_status]);
 
   return (
-    <div
-      className="flex items-center justify-between mb-8 w-full flex-row "
-      role="progressbar"
-      aria-label={`وضعیت سفارش: ${order.delivery_status}`}
-    >
+    <div className="flex items-center justify-between mb-8 w-full flex-row" role="progressbar">
       {stages.map((stage, index) => {
         const { bgColor, borderColor, icon, isCompleted, isCurrent } = stageStyles[index];
-
         return (
           <div key={stage} className="flex items-center w-full relative">
-            {/* دایره */}
             <div className="relative flex flex-col items-center">
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300"
@@ -481,21 +132,16 @@ const ProgressBar = ({ order }) => {
               >
                 {icon}
               </div>
-              {/* عنوان */}
               <div className="absolute top-10 text-sm text-gray-300 font-[Byekan] text-center whitespace-nowrap">
                 {stage}
               </div>
             </div>
-
-            {/* خط بین استیج‌ها */}
             {index < stages.length - 1 && (
-              <div className="flex-1 h-1 mx-2 relative" dir='rtl'>
-                {/* پس‌زمینه خاکستری */}
-                <div className="absolute top-0 right-0 w-full h-full bg-gray-600 rounded-full" dir='rtl'></div>
-
-                {/* بخش رنگی */}
+              <div className="flex-1 h-1 mx-2 relative" dir="rtl">
+                <div className="absolute top-0 right-0 w-full h-full bg-gray-600 rounded-full"></div>
                 <div
-                  className="absolute top-0 right-0 h-full rounded-full transition-all duration-500" dir='rtl'
+                  className="absolute top-0 right-0 h-full rounded-full transition-all duration-500"
+                  dir="rtl"
                   style={{
                     backgroundColor: isCanceled ? getStageColor(order.delivery_status) : color,
                     width: isCanceled ? "100%" : isCompleted ? "100%" : isCurrent ? "50%" : "0%",
@@ -510,32 +156,27 @@ const ProgressBar = ({ order }) => {
   );
 };
 
+
 const Order = ({ order }) => {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
-  const [cancelReason, setCancelReason] = useState('');
+  const [cancelReason, setCancelReason] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
-  const statusColor = getColorClass(order.color, 'text');
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleCancelSubmit = () => {
-    setSuccessMessage('درخواست شما با موفقیت ثبت گردید، گزارش شما درصورت تایید همکاران ما تا یک ساعت آینده به کیف پول شما واریز خواهد شد.');
-  };
-
-  const handleReturnSubmit = () => {
-    setSuccessMessage('درخواست شما با موفقیت ثبت گردید، گزارش شما درصورت تایید همکاران ما تا یک ساعت آینده به کیف پول شما واریز خواهد شد.');
-  };
+  const handleCancelSubmit = () => setSuccessMessage("درخواست شما با موفقیت ثبت شد.");
+  const handleReturnSubmit = () => setSuccessMessage("درخواست شما با موفقیت ثبت شد.");
 
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-md mb-6 text-white font-[Byekan]">
       <div className="flex md:flex-row flex-col justify-between items-start gap-3 md:items-center mb-4">
-        <h3 className="text-lg text-[#C5A253] font-bold">{formatJalaliVerbose(order.created_at)}</h3>
+        <h3 className="text-lg text-[#C5A253] font-bold">{formatJalaliVerbose(order.created_at_jalali)}</h3>
         <div className="text-md text-gray-200 flex flex-col sm:flex-row-reverse gap-4 ">
-          <span>{order.created_at}</span>
-          <span className='hidden sm:block'>|</span>
-          <span>{order.reference_id || '-'}</span>
-          <span className='hidden sm:block'>|</span>
-          <span className='flex flex-row gap-3 items-center'>
+          <span>{order.created_at_jalali}</span>
+          <span className="hidden sm:block">|</span>
+          <span>{order.reference_id || "-"}</span>
+          <span className="hidden sm:block">|</span>
+          <span className="flex flex-row gap-3 items-center">
             <FaCreditCard className="text-white" />پرداخت آنلاین
           </span>
         </div>
@@ -543,15 +184,14 @@ const Order = ({ order }) => {
 
       <div className="mb-4">
         <span className="font-bold">وضعیت: </span>
-        <span className={statusColor}>{order.delivery_status}</span>
+        <span style={{ color: getStageColor(order.delivery_status) }}>
+          {getDeliveryLabel(order.delivery_status)}
+        </span>
       </div>
 
-      <div className="flex justify-center items-center w-full">
-        <ProgressBar order={order} />
-      </div>
+      <ProgressBar order={order} />
 
-      {/* نمایش آدرس و اطلاعات گیرنده در صورت تحویل‌شده بودن سفارش */}
-      {order.status === 'delivered' && (
+      {order.status === "delivered" && (
         <div className="text-sm mb-4 mt-4">
           <div>آدرس: {order.address}</div>
           <div>گیرنده: {order.receiver}</div>
@@ -559,13 +199,8 @@ const Order = ({ order }) => {
         </div>
       )}
 
-      {(order.status === 'returned' || order.status === 'canceled') && order.description && (
-        <div>
-          توضیحات:
-          <span className="text-sm mb-4 text-red-500">
-            {order.description}
-          </span>
-        </div>
+      {(order.status === "returned" || order.status === "canceled") && order.description && (
+        <div className="text-sm mb-4 text-red-500">توضیحات: {order.description}</div>
       )}
 
       <div className="my-10">
@@ -586,52 +221,44 @@ const Order = ({ order }) => {
           </tbody>
         </table>
       </div>
+
+
+      {/* Summary */}
       <div className="flex justify-between text-sm mb-4 border-t border-gray-600 pt-4">
-        <div>هزینه ارسال <br /> {formatNumber(order.shipping_cost)} </div>
+        <div>هزینه ارسال <br /> {formatNumber(order.shipping_cost)}</div>
         <div>جمع سفارش <br /> {formatNumber(order.original_items_total)}</div>
         <div>جمع تخفیف <br /> {formatNumber(order.total_discount_amount)}</div>
         <div>قابل پرداخت <br /> {formatNumber(order.total_discount_percentage)}%</div>
         <div>مبلغ نهایی <br /> {formatNumber(order.amount_paid)}</div>
       </div>
+
+      {/* Payment Info */}
       <div className="text-sm mb-4">
         <div className="font-bold mb-2">اطلاعات پرداخت</div>
-        <div>صاحب کارت: {order.payment_info.card_holder}</div>
-        <div>کارت مبدا: {order.payment_info.card_number}</div>
-        <div>تاریخ و زمان: {order.payment_info.date_time}</div>
-        <div>شماره پیگیری: {order.payment_info.tracking_number}</div>
-        <div>شماره مرجع: {order.payment_info.reference_id}</div>
-      </div>
-      {order.refund_info && (
-        <div className="text-sm mb-4">
-          <div className="font-bold mb-2">اطلاعات برگشت وجه</div>
-          <div>صاحب اکانت: {order.refund_info.account_holder}</div>
-          <div>وضعیت درخواست: {order.refund_info.status}</div>
-          <div>تاریخ و زمان: {order.refund_info.date_time}</div>
-          <div>لینک پیگیری: <a href="#" className="text-blue-500">{order.refund_info.wallet_link}</a></div>
-        </div>
-      )}
-      {order.description && (
-        <div className="text-sm mb-4 text-red-500">
-          توضیحات: {order.description}
-        </div>
-      )}
-      {order.return_window && (
-        <div className="text-sm mb-4 text-gray-400">
-          {order.return_window}
-        </div>
-      )}
-      <div className="flex justify-end gap-4">
-        {order.status === 'delivered' && (
+        {order.user || order.card_number ? (
           <>
-            <button onClick={() => setIsReturnModalOpen(true)} className="bg-orange-500 text-white px-4 py-2 rounded">
-              مرجوع کردن کالا
-            </button>
+            <div>صاحب کارت: {order.user.user || "-"}</div>
+            <div>کارت مبدا: {order.card_number || "-"}</div>
+            <div>تاریخ و زمان: {order.created_at_jalali || "-"}</div>
+            <div>شماره پیگیری: {order.tracking_code || "-"}</div>
+            <div>شماره مرجع: {order.reference_id || "-"}</div>
           </>
+        ) : (
+          <div className="text-gray-400">اطلاعات پرداخت موجود نیست</div>
         )}
-        <button className="bg-green-500 text-white px-4 py-2 rounded">
-          سفارش مجدد فاکتور
-        </button>
-        {order.status === 'current' && (
+      </div>
+
+
+      {order.return_window && <div className="text-sm mb-4 text-gray-400">{order.return_window}</div>}
+
+      <div className="flex justify-end gap-4">
+        {order.status === "delivered" && (
+          <button onClick={() => setIsReturnModalOpen(true)} className="bg-orange-500 text-white px-4 py-2 rounded">
+            مرجوع کردن کالا
+          </button>
+        )}
+        <button className="bg-green-500 text-white px-4 py-2 rounded">سفارش مجدد فاکتور</button>
+        {order.status === "current" && (
           <button onClick={() => setIsCancelModalOpen(true)} className="bg-red-500 text-white px-4 py-2 rounded">
             لغو سفارش
           </button>
@@ -640,7 +267,7 @@ const Order = ({ order }) => {
 
       {/* Cancel Modal */}
       <div
-        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${isCancelModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${isCancelModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
       >
         <div className="bg-[#272727] text-gray-400 p-6 rounded-lg max-w-md w-full mx-4">
@@ -651,8 +278,8 @@ const Order = ({ order }) => {
               <button
                 onClick={() => {
                   setIsCancelModalOpen(false);
-                  setCancelReason('');
-                  setSuccessMessage('');
+                  setCancelReason("");
+                  setSuccessMessage("");
                 }}
                 className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-700"
               >
@@ -678,8 +305,8 @@ const Order = ({ order }) => {
                 <button
                   onClick={() => {
                     setIsCancelModalOpen(false);
-                    setCancelReason('');
-                    setSuccessMessage('');
+                    setCancelReason("");
+                    setSuccessMessage("");
                   }}
                   className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600"
                 >
@@ -687,11 +314,9 @@ const Order = ({ order }) => {
                 </button>
                 <button
                   onClick={() => {
-                    if (cancelReason) {
-                      handleCancelSubmit();
-                    }
+                    if (cancelReason) handleCancelSubmit();
                   }}
-                  className={`bg-red-800 text-white px-4 py-2 rounded ${cancelReason ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
+                  className={`bg-red-800 text-white px-4 py-2 rounded ${cancelReason ? "hover:bg-red-700" : "opacity-50 cursor-not-allowed"
                     }`}
                 >
                   تأیید
@@ -704,7 +329,7 @@ const Order = ({ order }) => {
 
       {/* Return Modal */}
       <div
-        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${isReturnModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-300 ${isReturnModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
       >
         <div className="bg-[#272727] text-gray-400 p-6 rounded-lg max-w-md w-full mx-4">
@@ -716,7 +341,7 @@ const Order = ({ order }) => {
                 onClick={() => {
                   setIsReturnModalOpen(false);
                   setSelectedItems([]);
-                  setSuccessMessage('');
+                  setSuccessMessage("");
                 }}
                 className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-700"
               >
@@ -735,9 +360,7 @@ const Order = ({ order }) => {
                         checked={selectedItems.includes(item.id)}
                         onChange={() => {
                           setSelectedItems((prev) =>
-                            prev.includes(item.id)
-                              ? prev.filter((id) => id !== item.id)
-                              : [...prev, item.id]
+                            prev.includes(item.id) ? prev.filter((id) => id !== item.id) : [...prev, item.id]
                           );
                         }}
                         className="w-4 h-4 text-yellow-500 bg-gray-800 border-gray-600 rounded"
@@ -757,7 +380,7 @@ const Order = ({ order }) => {
                   onClick={() => {
                     setIsReturnModalOpen(false);
                     setSelectedItems([]);
-                    setSuccessMessage('');
+                    setSuccessMessage("");
                   }}
                   className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600"
                 >
@@ -765,11 +388,9 @@ const Order = ({ order }) => {
                 </button>
                 <button
                   onClick={() => {
-                    if (selectedItems.length > 0) {
-                      handleReturnSubmit();
-                    }
+                    if (selectedItems.length > 0) handleReturnSubmit();
                   }}
-                  className={`bg-red-800 text-white px-4 py-2 rounded ${selectedItems.length > 0 ? 'hover:bg-red-700' : 'opacity-50 cursor-not-allowed'
+                  className={`bg-red-800 text-white px-4 py-2 rounded ${selectedItems.length > 0 ? "hover:bg-red-700" : "opacity-50 cursor-not-allowed"
                     }`}
                 >
                   تأیید
@@ -783,20 +404,41 @@ const Order = ({ order }) => {
   );
 };
 
-
-// BuyHistory Component
 const BuyHistory = () => {
   const [activeTab, setActiveTab] = useState('current');
+  const [orders, setOrders] = useState([]);
 
-  const filteredOrders = ordersData.filter((order) => {
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/transactions/")
+      .then((res) => {
+        console.log("API Response:", res.data);
+        if (Array.isArray(res.data)) setOrders(res.data);
+        else if (res.data.results) setOrders(res.data.results);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const filteredOrders = orders.filter((order) => {
     if (activeTab === 'all') return true;
-    return order.status === activeTab;
+
+    // فیلتر کردن بر اساس delivery_status
+    switch (activeTab) {
+      case 'current':
+        return order.status === "success";
+      case 'delivered':
+        return order.delivery_status === "delivered" && order.status === "success";
+      case 'returned':
+        return order.delivery_status === "returned" && order.status === "success";
+      case 'canceled':
+        return order.status === "failed" && order.delivery_status != "delivered" && order.delivery_status != "returned";
+      default:
+        return true;
+    }
   });
 
   return (
     <div className="max-w-5xl mx-auto bg-[#272727]  p-6 rounded-lg text-white font-[Byekan]">
       <h1 className="text-2xl font-bold mb-6">تاریخچه سفارشات</h1>
-
 
       <div className="flex gap-4 mb-6 ">
         {['current', 'delivered', 'returned', 'canceled'].map((tab) => (
@@ -828,7 +470,7 @@ const BuyHistory = () => {
 
 // Main Dashboard Component
 const Dashboard = () => {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.user);
   const loading = useSelector((state) => state.user.loading);
   const fetchError = useSelector((state) => state.user.error);
@@ -847,7 +489,7 @@ const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem('grushell_access_token');
     console.log(token);
-    
+
     if (!token && !userData) {
       // navigate('/login');
     } else if (!userData && !loading && !fetchError) {
@@ -871,20 +513,20 @@ const dispatch = useDispatch();
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-// src/components/Dashboard.jsx
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const formattedFormData = {
-    first_name: formData.first_name || '',
-    last_name: formData.last_name || '',
-    birth_date: formData.birth_date || null, // خالی رو به null تبدیل کن
+  // src/components/Dashboard.jsx
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formattedFormData = {
+      first_name: formData.first_name || '',
+      last_name: formData.last_name || '',
+      birth_date: formData.birth_date || null, // خالی رو به null تبدیل کن
+    };
+    console.log("FormData being sent:", formattedFormData);
+    dispatch(updateUser(formattedFormData)) // فقط formData رو بفرست
+      .unwrap()
+      .then(() => alert('تغییرات ثبت شد!'))
+      .catch((err) => alert('خطا: ' + (err.message || JSON.stringify(err))));
   };
-  console.log("FormData being sent:", formattedFormData);
-  dispatch(updateUser(formattedFormData)) // فقط formData رو بفرست
-    .unwrap()
-    .then(() => alert('تغییرات ثبت شد!'))
-    .catch((err) => alert('خطا: ' + (err.message || JSON.stringify(err))));
-};
 
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
@@ -1009,7 +651,7 @@ const handleSubmit = (e) => {
                         type="tel"
                         name="phone_number"
                         value={formData.phone_number}
-                         
+
                         className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
                         placeholder="شماره تلفن"
                       />

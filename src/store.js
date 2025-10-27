@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './redux/cartSlice';
 import userReducer from './redux/userSlice';
 import addressReducer from './redux/addressSlice';
+import checkoutReducer from './redux/checkoutSlice';
 import { fetchUser, logout, updateUser } from './redux/userSlice';
 
 // Load cart from localStorage
@@ -24,6 +25,7 @@ const store = configureStore({
     cart: cartReducer,
     user: userReducer,
     address: addressReducer,
+    checkout: checkoutReducer,
   },
   preloadedState,
 });
