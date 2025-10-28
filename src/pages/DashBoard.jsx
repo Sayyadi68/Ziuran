@@ -119,7 +119,7 @@ const ProgressBar = ({ order }) => {
   }, [progress, color, isCanceled, order.delivery_status]);
 
   return (
-    <div className="flex items-center justify-between mb-8 w-full flex-row" role="progressbar">
+    <div className="flex items-center justify-between mb-8 w-full mr-[8%] md:w-[80%] md:mr-[20%] flex-row" role="progressbar">
       {stages.map((stage, index) => {
         const { bgColor, borderColor, icon, isCompleted, isCurrent } = stageStyles[index];
         return (
@@ -177,7 +177,7 @@ const Order = ({ order }) => {
           <span>{order.reference_id || "-"}</span>
           <span className="hidden sm:block">|</span>
           <span className="flex flex-row gap-3 items-center">
-            <FaCreditCard className="text-white" />پرداخت آنلاین
+            <FaCreditCard className="text-white" /> {order.payment_type || "-"}
           </span>
         </div>
       </div>
@@ -242,6 +242,7 @@ const Order = ({ order }) => {
             <div>تاریخ و زمان: {order.created_at_jalali || "-"}</div>
             <div>شماره پیگیری: {order.tracking_code || "-"}</div>
             <div>شماره مرجع: {order.reference_id || "-"}</div>
+            <div>شماره پیگیری اسنپ باکس: {order.snapbox_tracking_code || "-"}</div>
           </>
         ) : (
           <div className="text-gray-400">اطلاعات پرداخت موجود نیست</div>
@@ -428,7 +429,7 @@ const BuyHistory = () => {
       case 'delivered':
         return order.delivery_status === "delivered" && order.status === "success";
       case 'returned':
-        return order.delivery_status === "returned" && order.status === "success";
+        return order.delivery_status === "returned" ;
       case 'canceled':
         return order.status === "failed" && order.delivery_status != "delivered" && order.delivery_status != "returned";
       default:
