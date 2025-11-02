@@ -7,6 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { fetchUser, logout, updateUser } from "../redux/userSlice";
 import axios from 'axios'
 import jalaali from 'jalaali-js';
+import { toast } from "react-toastify";
+ 
+
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import gregorian from "react-date-object/calendars/gregorian";
+
+
 // Utility functions
 const formatNumber = (num) =>
   num != null ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
@@ -429,7 +438,7 @@ const BuyHistory = () => {
       case 'delivered':
         return order.delivery_status === "delivered" && order.status === "success";
       case 'returned':
-        return order.delivery_status === "returned" ;
+        return order.delivery_status === "returned";
       case 'canceled':
         return order.status === "failed" && order.delivery_status != "delivered" && order.delivery_status != "returned";
       default:
@@ -498,39 +507,86 @@ const Dashboard = () => {
     }
   }, [dispatch, userData, loading, fetchError, navigate]);
 
-  useEffect(() => {
-    if (userData) {
-      setFormData({
-        first_name: userData.first_name || '',
-        last_name: userData.last_name || '',
-        phone_number: userData.phone_number || '',
-        birth_date: userData.birth_date || '',
-      });
-    }
-  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // src/components/Dashboard.jsx
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formattedFormData = {
-      first_name: formData.first_name || '',
-      last_name: formData.last_name || '',
-      birth_date: formData.birth_date || null, // خالی رو به null تبدیل کن
+      first_name: formData.first_name || "",
+      last_name: formData.last_name || "",
+      birth_date: formData.birth_date || null,
     };
-    console.log("FormData being sent:", formattedFormData);
-    dispatch(updateUser(formattedFormData)) // فقط formData رو بفرست
+
+    console.log("📤 ارسال به سرور:", formattedFormData);
+
+    dispatch(updateUser(formattedFormData))
       .unwrap()
-      .then(() => alert('تغییرات ثبت شد!'))
-      .catch((err) => alert('خطا: ' + (err.message || JSON.stringify(err))));
+      .then(() => {
+
+        toast.success("✅ تغییرات ثبت شد!");
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+
+      })
+      .catch((err) => {
+        alert("⚠️ خطا: " + (err.message || JSON.stringify(err)));
+      });
   };
+
 
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+
+
+  const [displayDate, setDisplayDate] = useState(""); // برای نمایش فقط رشته شمسی
+  const [pickerValue, setPickerValue] = useState(null); // نگهداری DateObject شمسی
+
+
+  const handleDateChange = (date) => {
+    if (date instanceof DateObject) {
+      const shamsi = date.format("YYYY-MM-DD"); // فقط برای نمایش
+      const miladi = date.convert(gregorian).format("YYYY-MM-DD"); // برای ارسال
+
+      setPickerValue(date); // تقویم شمسی نگه دار
+      setDisplayDate(shamsi); // اینپوت فقط شمسی ببینه
+
+      setFormData((prev) => ({
+        ...prev,
+        birth_date: miladi, // فقط میلادی ذخیره کن برای سرور
+      }));
+
+      console.log("📅 نمایش شمسی:", shamsi, "→ ارسال میلادی:", miladi);
+    }
+  };
+
+  useEffect(() => {
+    if (userData?.birth_date) {
+      setDisplayDate(userData.birth_date); // شمسی
+      setPickerValue(
+        new DateObject({
+          date: userData.birth_date,
+          calendar: persian,
+          locale: persian_fa,
+        })
+      );
+
+      setFormData({
+        first_name: userData.first_name || "",
+        last_name: userData.last_name || "",
+        phone_number: userData.phone_number || "",
+        birth_date: userData.birth_date || "",
+      });
+    }
+  }, [userData]);
+
 
   return (
     <div className="flex flex-col lg:flex-row">
@@ -657,16 +713,39 @@ const Dashboard = () => {
                         placeholder="شماره تلفن"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium">تاریخ تولد</label>
-                      <input
-                        type="date"
-                        name="birth_date"
-                        value={formData.birth_date}
-                        onChange={handleChange}
-                        className="mt-1 block w-full rounded-md bg-[#1D1D1D] border-gray-600 text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm"
-                      />
+
+
+                    <div className='relative w-full'>
+                      <label className="block text-sm font-medium text-white">
+                        تاریخ تولد
+                      </label>
+
+                      <div className="w-full relative">
+                        <DatePicker
+                          calendar={persian}
+                          locale={persian_fa}
+                          calendarPosition="bottom-center"
+                          value={pickerValue}
+                          onChange={handleDateChange}
+                          render={(value, openCalendar) => (
+                            <input
+                              type="text"
+                              readOnly
+                              onClick={openCalendar}
+                              value={displayDate}
+                              placeholder="تاریخ تولد"
+                              className="w-full mt-1 block rounded-md bg-[#1D1D1D] text-white shadow-sm focus:ring-0 focus:border-[#C5A253] p-4 text-sm cursor-pointer"
+                            />
+                          )}
+                          inputClass="hidden"
+                          calendarClass="absolute left-0 top-full mt-1 w-full bg-[#1D1D1D] text-white rounded-md shadow-lg p-2 z-50"
+                          containerStyle={{ display: "block", width: "100%" }} // ✅ طول کامل و display block روی کانتینر
+                        />
+                      </div>
+
+
                     </div>
+
                   </div>
 
                   <div className="flex justify-center">
